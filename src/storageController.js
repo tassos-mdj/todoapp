@@ -1,8 +1,8 @@
-export function storageController(item, value) {
 
+    let storage;
 
     function storageAvailable(type) {
-        let storage;
+        
 
         try {
           storage = window[type];
@@ -19,13 +19,17 @@ export function storageController(item, value) {
             storage.length !== 0
           );
         }
-      }
+    }
 
-      if (storageAvailable("localStorage")) {
-            //sth
-    } else {
-        console.log("Storage availability error");
-      }
+    export function toStorage(item, value) {
+      storageAvailable("localStorage") ? storage.setItem(item, value) : console.log("Storage availability error");
+    }
+
+    export function fromStorage(item) {
+      let result
+      storageAvailable("localStorage") ? result = storage.getItem(item) : console.log("Storage availability error");
+      return result;
+    }
 
 
-}
+      
