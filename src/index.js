@@ -1,30 +1,16 @@
-import { toStorage, fromStorage } from "./storageController.js";
+import "./style.css";
+import { Storage } from "./storageController.js";
 import { User } from "./user.js";
 import { Entry } from "./entry.js";
 import { welcomeScreen } from "./screenController.js";
+import { storageInit } from "./storageController.js";
 
 export const body = document.querySelector('body');
 
 export let userLoggedIn = false;
 
-export let ids = JSON.parse(fromStorage('ids'));
-if (ids) {
-    typeof(ids) !== Object ? ids = [ids] : ids;
-    toStorage('ids', JSON.stringify(ids));
-    console.log(ids, typeof(ids));
-} else {
-    ids = [];
-}
+let ls = Storage();
 
-//test user
-const user = 'Tassos';
-let currentUser = new User(user);
-console.log(`${currentUser.username} is logged in with id: ${currentUser.id}`);
-
-const user2 = 'Agapi';
-let currentUser2 = new User(user);
-console.log(`${currentUser2.username} is logged in with id: ${currentUser2.id}`);
-
-// userLoggedIn ? loadDashboard(userId) : welcomeScreen();
+userLoggedIn ? loadDashboard(userId) : welcomeScreen();
 
 
