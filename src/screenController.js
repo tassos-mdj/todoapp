@@ -1,4 +1,5 @@
 import { body } from "./index.js";
+import { login } from "./index.js";
 
 export function welcomeScreen() {
     const wrapper = document.createElement('div');
@@ -21,14 +22,18 @@ export function welcomeScreen() {
     usernameInput.setAttribute('id', 'username');
     const login = document.createElement('button');
     login.setAttribute('id', 'login-button');
+    login.setAttribute('onclick', 'login()');
     login.textContent = 'Login';
 
     const createAccount = document.createElement('span');
     createAccount.setAttribute('id', 'signup-label');
     createAccount.textContent = "Don't have an account?";
+    
     const signUp = document.createElement('button');
     signUp.setAttribute('id', 'signup-button');
+    signUp.setAttribute('onclick', 'signUpForm()');
     signUp.textContent = 'Sign Up';
+
 
 
 
@@ -41,5 +46,11 @@ export function welcomeScreen() {
     welcomeSection.appendChild(signUp);
     wrapper.appendChild(welcomeSection);
     body.appendChild(wrapper);
+
+
+
+}
+
+export function loadDashboard(user) {
 
 }
