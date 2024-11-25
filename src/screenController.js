@@ -1,5 +1,5 @@
 import { body } from "./index.js";
-import { login } from "./index.js";
+import { login as loginFunction } from "./index.js";
 
 export function welcomeScreen() {
     const wrapper = document.createElement('div');
@@ -22,7 +22,7 @@ export function welcomeScreen() {
     usernameInput.setAttribute('id', 'username');
     const login = document.createElement('button');
     login.setAttribute('id', 'login-button');
-    login.setAttribute('onclick', 'login()');
+    login.addEventListener('click', (e) => {loginFunction()});
     login.textContent = 'Login';
 
     const createAccount = document.createElement('span');
