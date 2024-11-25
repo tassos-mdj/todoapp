@@ -19,22 +19,22 @@
         }
     }
 
-    export function Storage() {
+  export function Storage() {
 
-    let idIndex;
+    let index;
     
 
     return {
      
     storageInit() {
-      if (idIndex) {
-        console.log('Storage already initiated : ', idIndex);
+      if (index) {
+        console.log('Storage already initiated : ', index);
       } else {
-        idIndex = [null];
-        this.toStorage('idIndex', idIndex);
+        index = [null];
+        this.toStorage('index', index);
         console.log('Storage initiated');
       }
-      return idIndex;
+      return index;
     },
     
 
@@ -48,15 +48,29 @@
       return result;
     },
 
-    updateIdIndex(value) {
+    updateIndex(value) {
       this.storageInit();
       if (value) {
-        toStorage('idIndex', value);
-        return this.fromStorage('idIndex');
+        let indexUpdate = JSON.stringify(value);
+        toStorage('index', indexUpdate);
+        return value;
       } else {
-          return this.fromStorage('idIndex');
+          
+          return JSON.parse(this.fromStorage('index'));
       }
 
+    },
+
+    getUserLoginStatus() {
+      if (!this.fromStorage('userLoginStatus')) {
+         return false;
+      } else {
+        return this.fromStorage('userLoginStatus');
+      }
+    },
+
+    setUserLoginStatus(currUser, currStatus) {
+      this.toStorage('userLoginStatus', JSON.stringify({user: currUser, status: currStatus}));
     },
     };
   }

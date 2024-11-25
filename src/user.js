@@ -1,6 +1,3 @@
-// import { toStorage, fromStorage } from "./storageController.js";
-// import 
-
 export class User {
     constructor(username) {
         this.username = username;
