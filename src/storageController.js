@@ -27,11 +27,11 @@
     return {
      
     storageInit() {
-      if (index) {
+      if (JSON.parse(this.fromStorage('index3'))) {
         console.log('Storage already initiated : ', index);
       } else {
-        index = [null];
-        this.toStorage('index', index);
+        index = [0];
+        this.toStorage('index3', JSON.stringify(index));
         console.log('Storage initiated');
       }
       return index;
@@ -52,26 +52,16 @@
       this.storageInit();
       if (value) {
         let indexUpdate = JSON.stringify(value);
-        toStorage('index', indexUpdate);
+        this.toStorage('index3', indexUpdate);
         return value;
       } else {
           
-          return JSON.parse(this.fromStorage('index'));
+          return JSON.parse(this.fromStorage('index3'));
       }
 
     },
 
-    getUserLoginStatus() {
-      if (!this.fromStorage('userLoginStatus')) {
-         return false;
-      } else {
-        return this.fromStorage('userLoginStatus');
-      }
-    },
-
-    setUserLoginStatus(currUser, currStatus) {
-      this.toStorage('userLoginStatus', JSON.stringify({user: currUser, status: currStatus}));
-    },
+    
     };
   }
 

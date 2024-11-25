@@ -1,5 +1,6 @@
 import { body } from "./index.js";
-import { login as loginFunction } from "./index.js";
+import { login as loginFunction } from "./index.js"
+import { index } from "./index.js";
 
 export function welcomeScreen() {
     const wrapper = document.createElement('div');
@@ -25,32 +26,28 @@ export function welcomeScreen() {
     login.addEventListener('click', (e) => {loginFunction()});
     login.textContent = 'Login';
 
-    const createAccount = document.createElement('span');
-    createAccount.setAttribute('id', 'signup-label');
-    createAccount.textContent = "Don't have an account?";
-    
-    const signUp = document.createElement('button');
-    signUp.setAttribute('id', 'signup-button');
-    signUp.setAttribute('onclick', 'signUpForm()');
-    signUp.textContent = 'Sign Up';
-
-
-
-
-
     welcomeSection.appendChild(welcomeHeadline);
     welcomeSection.appendChild(welcomeText);
     welcomeSection.appendChild(usernameInput);
     welcomeSection.appendChild(login);
-    welcomeSection.appendChild(createAccount);
-    welcomeSection.appendChild(signUp);
+
     wrapper.appendChild(welcomeSection);
     body.appendChild(wrapper);
-
-
-
 }
 
 export function loadDashboard(user) {
+    body.innerHTML = "";
+    const welcomeHeadline = document.createElement('h1');
+    welcomeHeadline.textContent = `Welcome ${user}!`;
+    body.appendChild(welcomeHeadline);
 
+    const userData = index.reduce((final, entry) => {
+        if (entry.username === user)
+            final = entry;
+            return final;
+        } ,{})
+    console.log(userData);
+    const showdata = document.createElement('p');
+    showdata.textContent = userData.notes[0].title;
+    body.appendChild(showdata);
 }
