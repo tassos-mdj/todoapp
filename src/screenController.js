@@ -36,29 +36,10 @@ export function welcomeScreen() {
     body.appendChild(wrapper);
 }
 
-export function loadDashboard(activeUser) {
-    
+export function createDashboard(userData){
 
-    //find user
-    const userData = currentIndex.reduce((final, entry) => {
-        if (entry.username === activeUser){
-            final = entry;
-            
-        }  
-            return final;
-        } ,{})
-    
-    if (Object.keys(userData).length === 0) {
-        
-        let addUser = user(activeUser);
-        currentIndex.push(addUser);
-        loadDashboard(activeUser);
-    } else {
         body.innerHTML = "";
         const welcomeHeadline = document.createElement('h1');
         welcomeHeadline.textContent = `Welcome ${userData.username}!`;
         body.appendChild(welcomeHeadline);
-    }
-
-  
 }

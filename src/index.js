@@ -2,8 +2,7 @@ import "./style.css";
 import { Storage } from "./storageController.js";
 import { user } from "./user.js";
 import { Entry } from "./entry.js";
-import { welcomeScreen } from "./screenController.js";
-import { loadDashboard } from "./screenController.js";
+import { createDashboard, welcomeScreen } from "./screenController.js";
 
 const index = [
     {
@@ -49,3 +48,24 @@ export function login() {
 }
 welcomeScreen();
 
+function loadDashboard(activeUser) {
+    //find user
+    const userData = currentIndex.reduce((final, entry) => {
+        if (entry.username === activeUser){
+            final = entry;
+            
+        }  
+            return final;
+        } ,{})
+    
+    //check if user exists to load dashboard. If not add user & load dashboard
+    if (Object.keys(userData).length === 0) {
+        let addUser = user(activeUser);
+        currentIndex.push(addUser);
+        loadDashboard(activeUser);
+    } else {
+        createDashboard(userData);
+    }
+
+  
+}
