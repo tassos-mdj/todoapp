@@ -1,20 +1,11 @@
 import { ls as localStorage } from "./index.js"
-export class User {
-    constructor(username) {
-        this.username = username;
-        
+import { currentIndex } from "./index.js";
+export function user(username) {
+        return {
+            "username": username,
+            "view" : "cards",
+            "notes" : []
+        }      
     }
 
-    getUserLoginStatus() {
-        if (!localStorage.fromStorage('userLoginStatus')) {
-           return false;
-        } else {
-          return localStorage.fromStorage('userLoginStatus');
-        }
-      }
-  
-      setUserLoginStatus(currUser, currStatus) {
-        localStorage.toStorage('userLoginStatus', JSON.stringify({user: currUser, status: currStatus}));
-      }
-    
-}
+

@@ -1,6 +1,7 @@
 import { body } from "./index.js";
 import { login as loginFunction } from "./index.js"
-import { index } from "./index.js";
+import { currentIndex } from "./index.js";
+import { user } from "./user.js";
 
 export function welcomeScreen() {
     const wrapper = document.createElement('div');
@@ -35,19 +36,29 @@ export function welcomeScreen() {
     body.appendChild(wrapper);
 }
 
-export function loadDashboard(user) {
-    body.innerHTML = "";
-    const welcomeHeadline = document.createElement('h1');
-    welcomeHeadline.textContent = `Welcome ${user}!`;
-    body.appendChild(welcomeHeadline);
+export function loadDashboard(activeUser) {
+    
 
-    const userData = index.reduce((final, entry) => {
-        if (entry.username === user)
+    //find user
+    const userData = currentIndex.reduce((final, entry) => {
+        if (entry.username === activeUser){
             final = entry;
+            
+        }  
             return final;
         } ,{})
-    console.log(userData);
-    const showdata = document.createElement('p');
-    showdata.textContent = userData.notes[0].title;
-    body.appendChild(showdata);
+    
+    if (Object.keys(userData).length === 0) {
+        
+        let addUser = user(activeUser);
+        currentIndex.push(addUser);
+        loadDashboard(activeUser);
+    } else {
+        body.innerHTML = "";
+        const welcomeHeadline = document.createElement('h1');
+        welcomeHeadline.textContent = `Welcome ${userData.username}!`;
+        body.appendChild(welcomeHeadline);
+    }
+
+  
 }
