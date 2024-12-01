@@ -16,8 +16,12 @@
             <menu>
                 <ul>
                     <li id="task-add">
-                        <img src="./images/task-add.svg" alt="">
+                        <img src="./images/task-add.svg" id="task-add-icon" alt="">
                         <p>Add Task</p>
+                    </li>
+                    <li>
+                        <img src="./images/agenda.svg" alt="">
+                        <p>Agenda</p>
                     </li>
                     <li id="task-today">
                         <img src="./images/task-today.svg" alt="">
@@ -47,32 +51,27 @@
             </nav>
         </aside>
         <header>
-            <h2>Today</h2>
+            
             <div class="toggle-view">
-                <img src="" alt="">
+                <img src="./images/sliders.svg" alt="">
                 <p>View</p>
             </div>
         </header>
-        <article class="cards-view">
-            <div class="task">
-                <h3 class="task-title">Groceries</h3>
-                <p class="task-description">Flour, Soap, Milk</p>
-                <div class="task-categories">
-                    <span>#Home</span>
-                    <span>#Chores</span>
+        <div class="data-area">
+            <h2>Agenda</h2>
+            <article class="list-view">
+                <div class="task">
+                    <h3 class="task-title">Buy Groceries</h3>
+                    <p class="task-description">Flour, eggs, milk, soda</p>
+                    <div class="due-date">2024-11-29</div>
                 </div>
-                <div class="time-stamp">2024-11-29 22:55</div>
-            </div>
-            <div class="task">
-                <h3 class="task-title">Groceries</h3>
-                <p class="task-description">Flour, Soap, Milk</p>
-                <div class="task-categories">
-                    <span>#Home</span>
-                    <span>#Chores</span>
+                <div class="task">
+                    <h3 class="task-title">Check the progress on the side project</h3>
+                
+                    <div class="due-date">2024-11-29</div>
                 </div>
-                <div class="time-stamp">2024-11-29 22:55</div>
-            </div>
-        </article>
+            </article>
+        </div>
     </div>
 </body>
 </html>
