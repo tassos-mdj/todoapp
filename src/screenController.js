@@ -4,42 +4,60 @@ import { currentIndex } from "./index.js";
 import { user } from "./user.js";
 
 export function welcomeScreen() {
-    const wrapper = document.createElement('div');
-    wrapper.setAttribute('id', 'wrapper');
-    const welcomeSection = document.createElement('section');
-
-    welcomeSection.setAttribute('id', 'welcome-section');
-    const welcomeHeadline = document.createElement('h1');
-
-    welcomeHeadline.setAttribute('id', 'welcome-headline');
-    welcomeHeadline.textContent = 'MDj-Do App';
-
-    const welcomeText = document.createElement('p');
-    welcomeText.setAttribute('id', 'welcome-text');
-    welcomeText.textContent = "Welcome to Mdj-Do! Please enter your username below:";
-
-    const usernameInput = document.createElement('input');
-    usernameInput.setAttribute('type', 'text');
-    usernameInput.setAttribute('name', 'username');
-    usernameInput.setAttribute('id', 'username');
-    const login = document.createElement('button');
-    login.setAttribute('id', 'login-button');
+    const login = document.querySelector('#login-button');
     login.addEventListener('click', (e) => {loginFunction()});
-    login.textContent = 'Login';
-
-    welcomeSection.appendChild(welcomeHeadline);
-    welcomeSection.appendChild(welcomeText);
-    welcomeSection.appendChild(usernameInput);
-    welcomeSection.appendChild(login);
-
-    wrapper.appendChild(welcomeSection);
-    body.appendChild(wrapper);
 }
 
 export function createDashboard(userData){
+    const container = document.querySelector('.container');
+    container.classList.remove('hidden');
 
-        body.innerHTML = "";
-        const welcomeHeadline = document.createElement('h1');
-        welcomeHeadline.textContent = `Welcome ${userData.username}!`;
-        body.appendChild(welcomeHeadline);
+    const userNameDisplay = document.querySelector('.user-name-display');
+    userNameDisplay.textContent = userData.username;
+
+    loadAgenda(userData);
+    
 }
+
+function loadAgenda(userData) {
+    const userNotes = userData.notes;
+    console.log(userNotes);
+    const dataArea = document.querySelector('.data-area');
+    console.log(dataArea);
+
+    const heading = document.createElement('h2');
+    heading.textContent = 'Agenda';
+    console.log(heading);
+    dataArea.appendChild(heading);
+    
+    const article = document.createElement('article');
+    article.classList.add('list-view');
+    
+
+    for (let note of userNotes) {
+    
+    let task = document.createElement('div');
+    task.classList.add('task');
+
+    let taskTitle = document.createElement('h3');
+    taskTitle.classList.add('task-title');
+    taskTitle.textContent = note.title;
+    task.appendChild(taskTitle);
+
+    let taskDescription = document.createElement('p');
+    taskDescription.classList.add('task-description');
+    taskDescription.textContent = note.description;
+    task.appendChild(taskDescription);
+
+    let dueDate = document.createElement('div');
+    dueDate.classList.add('due-date');
+    
+    article.appendChild(task);
+
+    }
+
+    dataArea.appendChild(article);
+}
+
+
+

@@ -7,28 +7,37 @@
     <link rel="stylesheet" href="./style2.css">
 </head>
 <body>
-    <div class="container">
+    <div id="wrapper">
+        <section id="welcome-section">
+            <h1 id="welcome-headline">MDj-Do App</h1>
+            <p id="welcome-text">Welcome to Mdj-Do! Please enter your username below:</p>
+            <input type="text" name="username" id="username">
+            <button id="login-button">Login</button>
+        </section>
+    </div>
+    
+    <div class="container hidden">
         <aside>
             <div class="user-info">
                 <img src="./AI-pfp.jpg" alt="User Profile Picture" class="user-pfp">
-                <p class="user-name-display">Tassos</p>
+                <p class="user-name-display"></p>
             </div>
             <menu>
                 <ul>
                     <li id="task-add">
-                        <img src="./images/task-add.svg" id="task-add-icon" alt="">
+                        <img src="./images/task-add.svg" id="task-add-icon" alt="Add Task Icon">
                         <p>Add Task</p>
                     </li>
                     <li>
-                        <img src="./images/agenda.svg" alt="">
+                        <img src="./images/agenda.svg" alt="Agenda Icon">
                         <p>Agenda</p>
                     </li>
-                    <li id="task-today">
-                        <img src="./images/task-today.svg" alt="">
+                    <li>
+                        <img src="./images/task-today.svg" alt="Today Icon">
                         <p>Today</p>
                     </li>
-                    <li id="task-all">
-                        <img src="./images/task-all.svg" alt="">
+                    <li>
+                        <img src="./images/task-all.svg" alt="View all Icon">
                         <p>View All</p>
                     </li>
                 </ul>
@@ -58,7 +67,7 @@
             </div>
         </header>
         <div class="data-area">
-            <h2>Agenda</h2>
+            <!-- <h2>Agenda</h2>
             <article class="list-view">
                 <div class="task">
                     <h3 class="task-title">Buy Groceries</h3>
@@ -70,7 +79,7 @@
                 
                     <div class="due-date">2024-11-29</div>
                 </div>
-            </article>
+            </article> -->
         </div>
     </div>
 </body>

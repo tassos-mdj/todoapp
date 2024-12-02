@@ -42,8 +42,11 @@ const index = [
 export let currentIndex = index;
 export let ls = Storage();
 export const body = document.querySelector('body');
+
 export function login() {
     const usernameInput = document.querySelector('#username');
+    const wrapper = document.querySelector('#wrapper');
+    wrapper.style.display = 'none';
     loadDashboard(usernameInput.value);
 }
 welcomeScreen();
