@@ -60,9 +60,10 @@ aside {
     flex-direction: column;
     gap: 2em;
     padding: 1.2em;
-    align-items: start;
+    align-items: stretch;
     max-height: 100vh;
     background-color: #F8F8FF;
+
     
 }
 
@@ -73,12 +74,18 @@ ul {
 }
 
 
-menu {
+menu, nav {
     padding: 0;
+}
+
+.active-menu-item {
+    background-color: rgba(255, 0, 0, 0.3);
+    border-radius: 10px;
 }
 
 aside li {
     cursor: pointer;
+    padding: 0 10%;
 }
 
 .user-info , li {
