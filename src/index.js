@@ -1,7 +1,7 @@
 import "./style.css";
 import { Storage } from "./storageController.js";
 import { user } from "./user.js";
-import { createDashboard, welcomeScreen, displayContent } from "./screenController.js";
+import { createDashboard, welcomeScreen, displayContent, displayCategories } from "./screenController.js";
 import { format } from "date-fns"; 
 
 
@@ -82,6 +82,7 @@ function loadDashboard(activeUser) {
     } else {
         loadAgenda(userData.notes);
         createDashboard(userData);
+        displayCategories(catLoader(userData.notes));
         console.log(catLoader(userData.notes));
     }
 
@@ -100,8 +101,9 @@ function loadDashboard(activeUser) {
     })
 
     //Menu items functionality
-    const aside = document.querySelector('menu');
-    const lis = aside.querySelectorAll('li');
+    const menu = document.querySelector('menu');
+    const lis = menu.querySelectorAll('li');
+    const h2 = document.querySelector('.heading');
     for (let i = 0; i < lis.length; i++) {
         lis[i].addEventListener('click', function () {
             switch (lis[i].id) {
@@ -115,14 +117,32 @@ function loadDashboard(activeUser) {
                     //loadViewAll(userData);
                     console.log('Clicked View All!');
                     break;
-                case 'cat-all':
-                    displayContent('agenda', userData);
-                    break;
-                
             }
-                });
+            
+            let currentHeadingId = h2.id;
+
+            
+        });        
     }
-}
+
+    const nav = document.querySelector('nav');
+    const navLis = nav.querySelectorAll('li');
+
+    for (let i = 0; i < navLis.length; i++) {
+        navLis[i].addEventListener('click', function () {
+        if (navLis[i].id.startsWith('cat-')) {
+            console.log('clicked cat-');
+            let passId = navLis[i].id.slice(4);
+            if (currentHeadingId === 'agenda') {
+                displayContent('agenda', catFilter(userData.notes, passId));
+            } else {
+                displayContent('today', catFilter(userData.notes, passId));
+            }
+
+        }
+        });
+    }
+} 
 
 //Sort notes for agenda
 function loadAgenda(notes) {
@@ -138,10 +158,22 @@ function catLoader(notes) {
     let catList = [];
     for (let note of notes) {
         for (let category of note.categories) {
-            if (!catList.find(category)) {
+            console.log(typeof(category),' + ' ,category)
+            if (!catList.includes(category)) {
                 catList.push(category);
             }
         }
     }
     return catList;
+}
+
+function catFilter(notes, id) {
+    
+    let filteredCatList = [];
+    for (let note of notes) {
+        if (note.categories.includes(id)) {
+             filteredCatList.push(note);
+        }
+    }
+    return filteredCatList;
 }

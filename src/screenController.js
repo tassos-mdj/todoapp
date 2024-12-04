@@ -1,7 +1,5 @@
 import { login as loginFunction } from "./index.js"
-import { format } from "date-fns";
-
-
+import hash from "./images/hash.svg"
 
 export function welcomeScreen() {
     const login = document.querySelector('#login-button');
@@ -29,6 +27,8 @@ export function displayContent(section, userNotes) {
     dataArea.innerHTML = '';
 
     const heading = document.createElement('h2');
+    heading.setAttribute('id', section);
+    heading.classList.add('heading');
     heading.textContent = section;
     dataArea.appendChild(heading);
     
@@ -80,96 +80,18 @@ function resetActiveMenuItems() {
     document.getElementById('view-all').classList.remove('active-menu-item');
 }
 
-
-// export function loadAgenda(userData) {
-    //     resetActiveMenuItems();
-    
-    //     const menuAgenda = document.getElementById('agenda');
-    //     menuAgenda.classList.add('active-menu-item');
-    
-    //     const userNotes = userData.notes;
-    //     const dataArea = document.querySelector('.data-area');
-    //     dataArea.innerHTML = '';
-    
-    //     const heading = document.createElement('h2');
-    //     heading.textContent = 'Agenda';
-    //     dataArea.appendChild(heading);
-        
-    //     const article = document.createElement('article');
-    //     article.classList.add('list-view');
-        
-    
-    //     for (let note of userNotes) {
-        
-    //         let task = document.createElement('div');
-    //         task.classList.add('task');
-    
-    //         let taskTitle = document.createElement('h3');
-    //         taskTitle.classList.add('task-title');
-    //         taskTitle.textContent = note.title;
-    //         task.appendChild(taskTitle);
-    
-    //         let taskDescription = document.createElement('p');
-    //         taskDescription.classList.add('task-description');
-    //         taskDescription.textContent = note.description;
-    //         task.appendChild(taskDescription);
-    
-    //         let dueDate = document.createElement('div');
-    //         dueDate.classList.add('due-date');
-    //         dueDate.textContent = note.date;
-    //         task.appendChild(dueDate);
-        
-    //         article.appendChild(task);
-    //     }
-    
-    //     dataArea.appendChild(article);
-    // }
-    
-    // export function loadToday(userData) {
-    //     resetActiveMenuItems();
-        
-    //     const menuToday = document.getElementById('today');
-    //     menuToday.classList.add('active-menu-item');
-    
-    //     const userNotes = userData.notes;
-    //     const dataArea = document.querySelector('.data-area');
-    //     dataArea.innerHTML = '';
-    
-    //     const heading = document.createElement('h2');
-    //     heading.textContent = 'Today';
-    //     dataArea.appendChild(heading);
-        
-    //     const article = document.createElement('article');
-    //     article.classList.add('list-view');
-        
-    
-    //     for (let note of userNotes) {
-    
-    //         if (note.date === currentDate) {
-        
-    //             let task = document.createElement('div');
-    //             task.classList.add('task');
-    
-    //             let taskTitle = document.createElement('h3');
-    //             taskTitle.classList.add('task-title');
-    //             taskTitle.textContent = note.title;
-    //             task.appendChild(taskTitle);
-    
-    //             let taskDescription = document.createElement('p');
-    //             taskDescription.classList.add('task-description');
-    //             taskDescription.textContent = note.description;
-    //             task.appendChild(taskDescription);
-    
-    //             let dueDate = document.createElement('div');
-    //             dueDate.classList.add('due-date');
-    //             dueDate.textContent = note.date;
-    //             task.appendChild(dueDate);
-        
-    //             article.appendChild(task);
-    //         }
-    //     }
-    
-    //     dataArea.appendChild(article);
-    
-    // }
-
+export function displayCategories(catList) {
+    const catUl = document.getElementById('cat-ul');
+    for (let item of catList) {
+        let itemId = 'cat' + item.toLowerCase();
+        const li = document.createElement('li');
+        li.setAttribute('id', itemId);
+        const img = new Image();
+        img.src = hash;
+        const p  = document.createElement('p');
+        p.textContent = item;
+        li.appendChild(img);
+        li.appendChild(p);
+        catUl.appendChild(li);
+    }
+}
