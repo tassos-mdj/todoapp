@@ -16,13 +16,19 @@ const index = [
             title: 'Groceries',
             description: 'Flour, Soap, Milk',
             categories: ['home', 'chores'],
-            date: '2024-12-03'
+            date: '2024-12-22'
         },
         {
             title: 'Bar supplies',
             description: 'vodka, whiskey, gin',
             categories: ['home', 'fun'],
             date: '2024-12-15'
+        },
+        {
+            title: 'Food supplies',
+            description: 'Item1, Item2, Item3',
+            categories: ['home', 'fun'],
+            date: '2024-12-04'
         }
     ]
     },
@@ -47,9 +53,8 @@ const index = [
 ];
 
 export let currentIndex = index;
-export let ls = Storage();
-export const body = document.querySelector('body');
 
+//hide welcome section after login
 export function login() {
     const usernameInput = document.querySelector('#username');
     const wrapper = document.querySelector('#wrapper');
@@ -57,6 +62,7 @@ export function login() {
     loadDashboard(usernameInput.value);
 }
 welcomeScreen();
+
 
 function loadDashboard(activeUser) {
     //find user
@@ -74,12 +80,28 @@ function loadDashboard(activeUser) {
         currentIndex.push(addUser);
         loadDashboard(activeUser);
     } else {
+        loadAgenda(userData.notes);
         createDashboard(userData);
+        console.log(catLoader(userData.notes));
     }
 
+    //toggle view functionality
+    const toogleView = document.querySelector('.toggle-view');
+    toogleView.addEventListener('click', function () {
+        const article = document.querySelector('article');
+        console.log('Clicked toggle-view');
+        if (article.classList.contains('list-view')) {
+            article.classList.replace('list-view', 'cards-view');
+        } else {
+            article.classList.replace('cards-view', 'list-view');
+        }
+     
+
+    })
+
+    //Menu items functionality
     const aside = document.querySelector('menu');
     const lis = aside.querySelectorAll('li');
-
     for (let i = 0; i < lis.length; i++) {
         lis[i].addEventListener('click', function () {
             switch (lis[i].id) {
@@ -100,13 +122,26 @@ function loadDashboard(activeUser) {
             }
                 });
     }
-  
 }
 
+//Sort notes for agenda
 function loadAgenda(notes) {
     return notes.sort((a,b) => new Date(a.date) - new Date(b.date));
 }
 
+//Filter today's notes
 function loadToday(notes) {
     return notes.filter((note) => note.date === currentDate);
+}
+
+function catLoader(notes) {
+    let catList = [];
+    for (let note of notes) {
+        for (let category of note.categories) {
+            if (!catList.find(category)) {
+                catList.push(category);
+            }
+        }
+    }
+    return catList;
 }

@@ -126,6 +126,7 @@ header {
 .toggle-view {
     display: flex;
     gap: 0.5rem;
+    cursor: pointer;
 }
 
 .toggle-view img {
