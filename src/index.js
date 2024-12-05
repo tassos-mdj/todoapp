@@ -1,7 +1,7 @@
 import "./style.css";
 import { Storage } from "./storageController.js";
 import { user } from "./user.js";
-import { createDashboard, welcomeScreen, displayContent, displayCategories } from "./screenController.js";
+import { createDashboard, welcomeScreen, displayContent, displayCategories, resetActiveCategory } from "./screenController.js";
 import { format } from "date-fns"; 
 
 
@@ -27,9 +27,15 @@ const index = [
         {
             title: 'Food supplies',
             description: 'Item1, Item2, Item3',
-            categories: ['home', 'fun'],
-            date: '2024-12-04'
-        }
+            categories: ['home', 'family'],
+            date: '2024-12-05'
+        },
+        {    
+            title: 'Organize Party',
+            description: 'Buy booze, send invitations',
+            categories: ['fun'],
+            date: '2024-12-23'
+        },
     ]
     },
     {
@@ -83,14 +89,12 @@ function loadDashboard(activeUser) {
         loadAgenda(userData.notes);
         createDashboard(userData);
         displayCategories(catLoader(userData.notes));
-        console.log(catLoader(userData.notes));
     }
 
     //toggle view functionality
     const toogleView = document.querySelector('.toggle-view');
     toogleView.addEventListener('click', function () {
         const article = document.querySelector('article');
-        console.log('Clicked toggle-view');
         if (article.classList.contains('list-view')) {
             article.classList.replace('list-view', 'cards-view');
         } else {
@@ -101,47 +105,44 @@ function loadDashboard(activeUser) {
     })
 
     //Menu items functionality
-    const menu = document.querySelector('menu');
-    const lis = menu.querySelectorAll('li');
+    const aside = document.querySelector('aside');
+    const lis = aside.querySelectorAll('li');
     const h2 = document.querySelector('.heading');
+    let currentHeadingId = h2.id;
     for (let i = 0; i < lis.length; i++) {
         lis[i].addEventListener('click', function () {
-            switch (lis[i].id) {
-                case 'agenda':
+            
+            switch (lis[i].id.substring(0,4)) {
+                case 'agen':
+                    currentHeadingId = 'agenda';
                     displayContent('agenda', loadAgenda(userData.notes));
                     break;
-                case 'today':
+                case 'toda':
+                    currentHeadingId = 'today';
                     displayContent('today', loadToday(userData.notes));
                     break;
-                case 'view-all':
-                    //loadViewAll(userData);
-                    console.log('Clicked View All!');
+                case 'all-':
+                    resetActiveCategory();
+                    if (currentHeadingId === 'agenda') {
+                        displayContent('agenda', loadAgenda(userData.notes));
+                    } else {
+                        displayContent('today', loadToday(userData.notes));
+                    }
                     break;
-            }
-            
-            let currentHeadingId = h2.id;
+                case 'cat-':
+                    resetActiveCategory();
+                    lis[i].classList.add('active-menu-items');
+                    let passId = lis[i].id.slice(4);
+                    if (currentHeadingId === 'agenda') {
+                        displayContent('agenda', loadAgenda(catFilter(userData.notes, passId)));
+                    } else {
+                        displayContent('today', loadToday(catFilter(userData.notes, passId)));
+                    }
 
-            
+            }
         });        
     }
 
-    const nav = document.querySelector('nav');
-    const navLis = nav.querySelectorAll('li');
-
-    for (let i = 0; i < navLis.length; i++) {
-        navLis[i].addEventListener('click', function () {
-        if (navLis[i].id.startsWith('cat-')) {
-            console.log('clicked cat-');
-            let passId = navLis[i].id.slice(4);
-            if (currentHeadingId === 'agenda') {
-                displayContent('agenda', catFilter(userData.notes, passId));
-            } else {
-                displayContent('today', catFilter(userData.notes, passId));
-            }
-
-        }
-        });
-    }
 } 
 
 //Sort notes for agenda
@@ -154,11 +155,11 @@ function loadToday(notes) {
     return notes.filter((note) => note.date === currentDate);
 }
 
+//Retrieve user note categories from all notes
 function catLoader(notes) {
     let catList = [];
     for (let note of notes) {
         for (let category of note.categories) {
-            console.log(typeof(category),' + ' ,category)
             if (!catList.includes(category)) {
                 catList.push(category);
             }
@@ -167,8 +168,8 @@ function catLoader(notes) {
     return catList;
 }
 
+//Filter categories
 function catFilter(notes, id) {
-    
     let filteredCatList = [];
     for (let note of notes) {
         if (note.categories.includes(id)) {
