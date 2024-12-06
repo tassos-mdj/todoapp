@@ -181,3 +181,4 @@ function catFilter(notes, id) {
     }
     return filteredCatList;
 }
+
