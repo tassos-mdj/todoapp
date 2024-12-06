@@ -18,7 +18,6 @@ export function createDashboard(userData){
 
 export function displayContent(section, userNotes) {
     resetActiveMenuItems();
-    resetActiveCategory();
 
     const currentSection = document.getElementById(section);
     currentSection.classList.add('active-menu-item');
@@ -81,11 +80,13 @@ function resetActiveMenuItems() {
     document.getElementById('view-all').classList.remove('active-menu-item');
 }
 
-export function resetActiveCategory() {
+export function resetNonActiveCategory(id) {
     const nav = document.querySelector('nav');
     const categories = nav.querySelectorAll('li');
     for (let category of categories) {
-        category.classList.remove('active-menu-items');
+        if (category.id !== id) {
+        category.classList.remove('active-menu-item');
+        }
     }
 }
 

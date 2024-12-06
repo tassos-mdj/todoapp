@@ -1,7 +1,7 @@
 import "./style.css";
 import { Storage } from "./storageController.js";
 import { user } from "./user.js";
-import { createDashboard, welcomeScreen, displayContent, displayCategories, resetActiveCategory } from "./screenController.js";
+import { createDashboard, welcomeScreen, displayContent, displayCategories, resetNonActiveCategory } from "./screenController.js";
 import { format } from "date-fns"; 
 
 
@@ -16,25 +16,25 @@ const index = [
             title: 'Groceries',
             description: 'Flour, Soap, Milk',
             categories: ['home', 'chores'],
-            date: '2024-12-22'
+            date: '2025-01-22'
         },
         {
             title: 'Bar supplies',
             description: 'vodka, whiskey, gin',
             categories: ['home', 'fun'],
-            date: '2024-12-15'
+            date: '2025-01-15'
         },
         {
             title: 'Food supplies',
             description: 'Item1, Item2, Item3',
             categories: ['home', 'family'],
-            date: '2024-12-05'
+            date: '2024-12-30'
         },
         {    
             title: 'Organize Party',
             description: 'Buy booze, send invitations',
             categories: ['fun'],
-            date: '2024-12-23'
+            date: '2024-12-28'
         },
     ]
     },
@@ -46,13 +46,13 @@ const index = [
                 title: 'Vacation Planning',
                 description: 'Get tickets, renew passport',
                 categories: ['vacation', 'family', 'home'],
-                date: '2024-12-06'
+                date: '2024-12-27'
             },
             {
                 title: 'Gym routine',
                 description: 'Stand-ups, sit-ups, pull-ups, push-ups',
                 categories: ['health', 'fun'],
-                date: '2024-12-08'
+                date: '2024-12-31'
             }
         ]
     }
@@ -89,6 +89,7 @@ function loadDashboard(activeUser) {
         loadAgenda(userData.notes);
         createDashboard(userData);
         displayCategories(catLoader(userData.notes));
+        document.getElementById('all-cat').classList.add('active-menu-item');
     }
 
     //toggle view functionality
@@ -122,7 +123,8 @@ function loadDashboard(activeUser) {
                     displayContent('today', loadToday(userData.notes));
                     break;
                 case 'all-':
-                    resetActiveCategory();
+                    resetNonActiveCategory(lis[i].id);
+                    lis[i].classList.add('active-menu-item');
                     if (currentHeadingId === 'agenda') {
                         displayContent('agenda', loadAgenda(userData.notes));
                     } else {
@@ -130,8 +132,9 @@ function loadDashboard(activeUser) {
                     }
                     break;
                 case 'cat-':
-                    resetActiveCategory();
-                    lis[i].classList.add('active-menu-items');
+                    resetNonActiveCategory(lis[i].id);
+                    lis[i].classList.add('active-menu-item');
+
                     let passId = lis[i].id.slice(4);
                     if (currentHeadingId === 'agenda') {
                         displayContent('agenda', loadAgenda(catFilter(userData.notes, passId)));
