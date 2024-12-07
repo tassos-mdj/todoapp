@@ -36,12 +36,12 @@ export function displayContent(section, userNotes) {
     } else {
         const article = document.createElement('article');
         article.classList.add('list-view');
-        loadTasks(article, userNotes);
+        loadNotes(article, userNotes);
         dataArea.appendChild(article);
     }
 }
 
-function loadTasks(article, userNotes) {
+function loadNotes(article, userNotes) {
     if (userNotes.length === 0) {
         let task = document.createElement('div');
         task.classList.add('task');
@@ -110,7 +110,7 @@ export function displayCategories(catList) {
     }
 }
 
-function loadCalendar() {
+function loadCalendar(userNotes) {
     
     let date = new Date();
     let year = date.getFullYear();
