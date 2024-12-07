@@ -95,16 +95,19 @@ function loadDashboard(activeUser) {
 
     //toggle view functionality
     const toogleView = document.querySelector('.toggle-view');
+
     toogleView.addEventListener('click', function () {
         const article = document.querySelector('article');
-        if (article.classList.contains('list-view')) {
-            article.classList.replace('list-view', 'cards-view');
-        } else {
-            article.classList.replace('cards-view', 'list-view');
+        if (article) {
+            if (article.classList.contains('list-view')) {
+                article.classList.replace('list-view', 'cards-view');
+            } else {
+                article.classList.replace('cards-view', 'list-view');
+            }
         }
-     
 
     })
+    
 
     //Menu items functionality
     const aside = document.querySelector('aside');
@@ -113,19 +116,22 @@ function loadDashboard(activeUser) {
     let currentHeadingId = h2.id;
     for (let i = 0; i < lis.length; i++) {
         lis[i].addEventListener('click', function () {
-            
+            const toggle = document.querySelector('.toggle-view');
             switch (lis[i].id.substring(0,4)) {
                 case 'agen':
                     currentHeadingId = 'agenda';
                     displayContent('agenda', loadAgenda(userData.notes));
+                    toggle.classList.remove('inactive');
                     break;
                 case 'toda':
                     currentHeadingId = 'today';
                     displayContent('today', loadToday(userData.notes));
+                    toggle.classList.remove('inactive');
                     break;
                 case 'cale':
                     currentHeadingId = 'calendar';
                     displayContent('calendar', userData.notes);
+                    toggle.classList.add('inactive');
                     break;
                 case 'all-':
                     resetNonActiveCategory(lis[i].id);
@@ -139,12 +145,11 @@ function loadDashboard(activeUser) {
                             break;
                         case 'calendar' :
                             displayContent('calendar', userData.notes);
+                            break;
                     }
-                    break;
                 case 'cat-':
                     resetNonActiveCategory(lis[i].id);
                     lis[i].classList.add('active-menu-item');
-
                     let passId = lis[i].id.slice(4);
                     switch (currentHeadingId) {
                         case 'agenda':
