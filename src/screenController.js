@@ -21,7 +21,6 @@ export function displayContent(section, userNotes) {
 
     const currentSection = document.getElementById(section);
     currentSection.classList.add('active-menu-item');
-
     
     const dataArea = document.querySelector('.data-area');
     dataArea.innerHTML = '';
@@ -32,9 +31,17 @@ export function displayContent(section, userNotes) {
     heading.textContent = section;
     dataArea.appendChild(heading);
     
-    const article = document.createElement('article');
-    article.classList.add('list-view');
-    
+    if (section === "calendar") {
+        loadCalendar()
+    } else {
+        const article = document.createElement('article');
+        article.classList.add('list-view');
+        loadTasks(article, userNotes);
+        dataArea.appendChild(article);
+    }
+}
+
+function loadTasks(article, userNotes) {
     if (userNotes.length === 0) {
         let task = document.createElement('div');
         task.classList.add('task');
@@ -69,15 +76,12 @@ export function displayContent(section, userNotes) {
         article.appendChild(task);
     }
 
-
-
-    dataArea.appendChild(article);
 }
 
 function resetActiveMenuItems() {
     document.getElementById('agenda').classList.remove('active-menu-item');
     document.getElementById('today').classList.remove('active-menu-item');
-    document.getElementById('view-all').classList.remove('active-menu-item');
+    document.getElementById('calendar').classList.remove('active-menu-item');
 }
 
 export function resetNonActiveCategory(id) {
@@ -105,3 +109,104 @@ export function displayCategories(catList) {
         catUl.appendChild(li);
     }
 }
+
+function loadCalendar() {
+    
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth();
+
+    const day = document.querySelector(".calendar-dates");
+
+    const currdate = document
+        .querySelector(".calendar-current-date");
+
+    const dataArea = document.querySelector('.data-area');
+    const container = document.createElement('div');
+    container.classList.add('calendar-container');
+    dataArea.appendChild(container);
+
+    // Array of month names
+    const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ];
+
+    // Function to generate the calendar
+    const manipulate = () => {
+
+        // Get the first day of the month
+        let dayone = new Date(year, month, 0).getDay();
+
+        // Get the last date of the month
+        let lastdate = new Date(year, month + 1, -1).getDate();
+
+        // Get the day of the last date of the month
+        let dayend = new Date(year, month, lastdate).getDay();
+
+        // Get the last date of the previous month
+        let monthlastdate = new Date(year, month, 0).getDate();
+
+        // Variable to store the generated calendar HTML
+        // let lit = "";
+
+        // Loop to add the last dates of the previous month
+        for (let i = dayone; i > 0; i--) {
+            const li = document.createElement('div');
+            li.classList.add('inactive');
+            const p = document.createElement('p');
+            p.textContent = monthlastdate - i + 1;
+            li.appendChild(p);
+            container.appendChild(li);
+            // lit +=
+            //     `<li class="inactive">${monthlastdate - i + 1}</li>`;
+        }
+
+
+        // Loop to add the dates of the current month
+        for (let i = 1; i <= lastdate; i++) {
+
+            // Check if the current date is today
+            let isToday = i === date.getDate()
+                && month === new Date().getMonth()
+                && year === new Date().getFullYear()
+                ? "active"
+                : "idle";
+
+                const li = document.createElement('div');
+                li.classList.add(isToday);
+                const p = document.createElement('p');
+                p.textContent = i;
+                li.appendChild(p);
+                container.appendChild(li);
+            // lit += `<li class="${isToday}">${i}</li>`;
+        }
+
+        // Loop to add the first dates of the next month
+        for (let i = dayend; i < 6; i++) {
+
+            const li = document.createElement('div');
+            li.classList.add('inactive');
+            const p = document.createElement('p');
+            p.textContent = i - dayend + 1;
+            li.appendChild(p);
+            container.appendChild(li);
+            // lit += `<li class="inactive">${i - dayend + 1}</li>`
+        }
+
+    }
+
+manipulate();
+
+}
+

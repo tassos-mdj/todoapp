@@ -104,14 +104,14 @@ aside li {
     padding: 0 10%;
 }
 
-.user-info , li {
+.user-info , aside li {
     display: flex;
     align-items: center;
     gap: 1rem;
     
 }
 
-li p {
+aside p {
     font-size: 1.2rem;
 }
 
@@ -225,4 +225,70 @@ article.list-view .time-stamp {
 
 .hidden {
     display: none;
+}
+
+.calendar-container {
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+    grid-template-rows: 6rem;
+    grid-auto-rows: 6rem;
+    margin: 2rem;
+    overflow: hidden;
+}
+
+.calendar-container > div {
+    position: relative;
+
+}
+
+.calendar-container > div::after,
+.calendar-container > div::before {
+    content: "";
+    background-color: black;
+    position: absolute;
+}
+
+.calendar-container > div:nth-child(1):after {
+    width: 100vw;
+    height: 1px;
+    top:0;
+    left:0;
+}
+
+.calendar-container > div:nth-child(1n) {
+    border-bottom: 1px solid black;
+}
+
+.calendar-container > div::before {
+    width: 1px;
+    height: 100vh;
+    top: 0;
+    left: 0;
+}
+
+.calendar-container > div:nth-child(7n) {
+    border-right: 1px solid black;
+}
+
+.calendar-container > div {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content auto-fill;
+    padding: 0.5rem;
+}
+
+.calendar-container p {
+    margin: 0;
+    justify-self: right;
+    align-self: start;
+    font-size: 1rem;
+}
+
+.inactive {
+    color: lightgray;
+}
+
+.active {
+    color: green;
+    font-weight: bold;
 }

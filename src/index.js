@@ -5,6 +5,7 @@ import { createDashboard, welcomeScreen, displayContent, displayCategories, rese
 import { format } from "date-fns"; 
 
 
+
 const currentDate = format(new Date(), "yyyy-MM-dd");
 
 const index = [
@@ -122,13 +123,22 @@ function loadDashboard(activeUser) {
                     currentHeadingId = 'today';
                     displayContent('today', loadToday(userData.notes));
                     break;
+                case 'cale':
+                    currentHeadingId = 'calendar';
+                    displayContent('calendar', userData.notes);
+                    break;
                 case 'all-':
                     resetNonActiveCategory(lis[i].id);
                     lis[i].classList.add('active-menu-item');
-                    if (currentHeadingId === 'agenda') {
-                        displayContent('agenda', loadAgenda(userData.notes));
-                    } else {
-                        displayContent('today', loadToday(userData.notes));
+                    switch (currentHeadingId) {
+                        case 'agenda':
+                            displayContent('agenda', loadAgenda(userData.notes));
+                            break;
+                        case 'today' :
+                            displayContent('today', loadToday(userData.notes));
+                            break;
+                        case 'calendar' :
+                            displayContent('calendar', userData.notes);
                     }
                     break;
                 case 'cat-':
@@ -136,10 +146,15 @@ function loadDashboard(activeUser) {
                     lis[i].classList.add('active-menu-item');
 
                     let passId = lis[i].id.slice(4);
-                    if (currentHeadingId === 'agenda') {
-                        displayContent('agenda', loadAgenda(catFilter(userData.notes, passId)));
-                    } else {
-                        displayContent('today', loadToday(catFilter(userData.notes, passId)));
+                    switch (currentHeadingId) {
+                        case 'agenda':
+                            displayContent('agenda', loadAgenda(catFilter(userData.notes, passId)));
+                            break;
+                        case 'today':
+                            displayContent('today', loadToday(catFilter(userData.notes, passId)));
+                            break;
+                        case 'calendar':
+                            displayContent('calendar', catFilter(userData.notes, passId));
                     }
 
             }
@@ -181,4 +196,3 @@ function catFilter(notes, id) {
     }
     return filteredCatList;
 }
-
