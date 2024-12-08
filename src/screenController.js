@@ -14,10 +14,10 @@ export function createDashboard(userData){
     const userNameDisplay = document.querySelector('.user-name-display');
     userNameDisplay.textContent = userData.username;
 
-    displayContent('agenda', userData.notes);
+    displayContent('agenda', userData.tasks);
 }
 
-export function displayContent(section, userNotes) {
+export function displayContent(section, userTasks) {
     resetActiveMenuItems();
 
     const currentSection = document.getElementById(section);
@@ -33,17 +33,24 @@ export function displayContent(section, userNotes) {
     dataArea.appendChild(heading);
     
     if (section === "calendar") {
-        loadCalendar(userNotes);
+        loadCalendar(userTasks);
     } else {
         const article = document.createElement('article');
         article.classList.add('list-view');
-        loadNotes(article, userNotes);
+        loadTasks(article, userTasks);
         dataArea.appendChild(article);
     }
 }
 
-function loadNotes(article, userNotes) {
-    if (userNotes.length === 0) {
+export function displayTask(task) {
+    const taskView = document.querySelector('#task-view');
+    taskView.innerHTML = '';
+    createTask(taskView, task);
+    taskView.showModal();
+}
+
+function loadTasks(article, userTasks) {
+    if (userTasks.length === 0) {
         let task = document.createElement('div');
         task.classList.add('task');
 
@@ -54,29 +61,34 @@ function loadNotes(article, userNotes) {
         article.appendChild(task);
     }
 
-    for (let note of userNotes) {
-    
-        let task = document.createElement('div');
+    for (let currentTask of userTasks) {
+        createTask(article, currentTask, currentTask.id);
+        
+    }
+
+}
+
+function createTask(container, currentTask, taskID) {
+    let task = document.createElement('div');
         task.classList.add('task');
+        task.setAttribute('id', `task-${taskID}`);
 
         let taskTitle = document.createElement('h3');
         taskTitle.classList.add('task-title');
-        taskTitle.textContent = note.title;
+        taskTitle.textContent = currentTask.title;
         task.appendChild(taskTitle);
 
         let taskDescription = document.createElement('p');
         taskDescription.classList.add('task-description');
-        taskDescription.textContent = note.description;
+        taskDescription.textContent = currentTask.description;
         task.appendChild(taskDescription);
 
         let dueDate = document.createElement('div');
         dueDate.classList.add('due-date');
-        dueDate.textContent = note.date;
+        dueDate.textContent = currentTask.date;
         task.appendChild(dueDate);
     
-        article.appendChild(task);
-    }
-
+        container.appendChild(task);
 }
 
 function resetActiveMenuItems() {
@@ -111,7 +123,7 @@ export function displayCategories(catList) {
     }
 }
 
-function loadCalendar(userNotes) {
+function loadCalendar(userTasks) {
     
     let date = new Date();
     let year = date.getFullYear();
@@ -167,8 +179,8 @@ function loadCalendar(userNotes) {
             p.textContent = monthlastdate - i + 1;
             li.appendChild(p);
 
-            // Load day's notes
-            loadNotes(li, userNotes.filter((note) => note.date === format(new Date(year, month - 1, monthlastdate - i + 1), "yyy-MM-dd")));
+            // Load day's tasks
+            loadTasks(li, userTasks.filter((task) => task.date === format(new Date(year, month - 1, monthlastdate - i + 1), "yyy-MM-dd")));
 
             container.appendChild(li);
       }
@@ -190,8 +202,8 @@ function loadCalendar(userNotes) {
                 p.textContent = i;
                 li.appendChild(p);
 
-                // Load day's notes
-                loadNotes(li, userNotes.filter((note) => note.date === format(new Date(year, month, i), "yyy-MM-dd")));
+                // Load day's tasks
+                loadTasks(li, userTasks.filter((task) => task.date === format(new Date(year, month, i), "yyy-MM-dd")));
 
                 container.appendChild(li);
         }
@@ -205,8 +217,8 @@ function loadCalendar(userNotes) {
             p.textContent = i - dayend + 1;
             li.appendChild(p);
 
-            // Load day's notes
-            loadNotes(li, userNotes.filter((note) => note.date === format(new Date(year, month + 1, i - dayend + 1), "yyy-MM-dd")));
+            // Load day's tasks
+            loadTasks(li, userTasks.filter((task) => task.date === format(new Date(year, month + 1, i - dayend + 1), "yyy-MM-dd")));
 
             container.appendChild(li);
         }

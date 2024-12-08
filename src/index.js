@@ -1,7 +1,7 @@
 import "./style.css";
 import { Storage } from "./storageController.js";
 import { user } from "./user.js";
-import { createDashboard, welcomeScreen, displayContent, displayCategories, resetNonActiveCategory } from "./screenController.js";
+import { createDashboard, welcomeScreen, displayContent, displayCategories, resetNonActiveCategory, displayTask } from "./screenController.js";
 import { format } from "date-fns"; 
 
 
@@ -12,48 +12,54 @@ const index = [
     {
     username: 'Tassos',
     view: 'cards',
-    notes: [
+    tasks: [
         {
             title: 'Groceries',
             description: 'Flour, Soap, Milk',
             categories: ['home', 'chores'],
-            date: '2025-01-02'
+            date: '2025-01-02',
+            id: 0
         },
         {
             title: 'Bar supplies',
             description: 'vodka, whiskey, gin',
             categories: ['home', 'fun'],
-            date: '2024-12-15'
+            date: '2024-12-15',
+            id: 1
         },
         {
             title: 'Food supplies',
             description: 'Item1, Item2, Item3',
             categories: ['home', 'family'],
-            date: '2024-11-30'
+            date: '2024-11-30',
+            id: 2
         },
         {    
             title: 'Organize Party',
             description: 'Buy booze, send invitations',
             categories: ['fun'],
-            date: '2024-12-28'
+            date: '2024-12-28',
+            id: 3
         },
     ]
     },
     {
         username: 'Agapi',
         view: 'list',
-        notes: [
+        tasks: [
             {
                 title: 'Vacation Planning',
                 description: 'Get tickets, renew passport',
                 categories: ['vacation', 'family', 'home'],
-                date: '2024-12-27'
+                date: '2024-12-27',
+                id: 0
             },
             {
                 title: 'Gym routine',
                 description: 'Stand-ups, sit-ups, pull-ups, push-ups',
                 categories: ['health', 'fun'],
-                date: '2024-12-31'
+                date: '2024-12-31',
+                id: 1
             }
         ]
     }
@@ -87,9 +93,9 @@ function loadDashboard(activeUser) {
         currentIndex.push(addUser);
         loadDashboard(activeUser);
     } else {
-        loadAgenda(userData.notes);
+        loadAgenda(userData.tasks);
         createDashboard(userData);
-        displayCategories(catLoader(userData.notes));
+        displayCategories(catLoader(userData.tasks));
         document.getElementById('all-cat').classList.add('active-menu-item');
     }
 
@@ -120,17 +126,17 @@ function loadDashboard(activeUser) {
             switch (lis[i].id.substring(0, 4)) {
                 case 'agen':
                     currentHeadingId = 'agenda';
-                    displayContent('agenda', loadAgenda(userData.notes));
+                    displayContent('agenda', loadAgenda(userData.tasks));
                     toggle.classList.remove('inactive');
                     break;
                 case 'toda':
                     currentHeadingId = 'today';
-                    displayContent('today', loadToday(userData.notes));
+                    displayContent('today', loadToday(userData.tasks));
                     toggle.classList.remove('inactive');
                     break;
                 case 'cale':
                     currentHeadingId = 'calendar';
-                    displayContent('calendar', userData.notes);
+                    displayContent('calendar', userData.tasks);
                     toggle.classList.add('inactive');
                     break;
                 case 'all-':
@@ -138,13 +144,13 @@ function loadDashboard(activeUser) {
                     lis[i].classList.add('active-menu-item');
                     switch (currentHeadingId) {
                         case 'agenda':
-                            displayContent('agenda', loadAgenda(userData.notes));
+                            displayContent('agenda', loadAgenda(userData.tasks));
                             break;
                         case 'today':
-                            displayContent('today', loadToday(userData.notes));
+                            displayContent('today', loadToday(userData.tasks));
                             break;
                         case 'calendar':
-                            displayContent('calendar', userData.notes);
+                            displayContent('calendar', userData.tasks);
                             break;
                     }
                     break;
@@ -154,36 +160,41 @@ function loadDashboard(activeUser) {
                     let passId = lis[i].id.slice(4);
                     switch (currentHeadingId) {
                         case 'agenda':
-                            displayContent('agenda', loadAgenda(catFilter(userData.notes, passId)));
+                            displayContent('agenda', loadAgenda(catFilter(userData.tasks, passId)));
                             break;
                         case 'today':
-                            displayContent('today', loadToday(catFilter(userData.notes, passId)));
+                            displayContent('today', loadToday(catFilter(userData.tasks, passId)));
                             break;
                         case 'calendar':
-                            displayContent('calendar', catFilter(userData.notes, passId));
+                            displayContent('calendar', catFilter(userData.tasks, passId));
                     }
 
             }
         });
     }
 
+    let tasks = document.querySelectorAll('.task');
+    for (let task of tasks) {
+        task.addEventListener('click', () => displayTask(task));
+    }
+
 } 
 
-//Sort notes for agenda
-function loadAgenda(notes) {
-    return notes.sort((a,b) => new Date(a.date) - new Date(b.date));
+//Sort tasks for agenda
+function loadAgenda(tasks) {
+    return tasks.sort((a,b) => new Date(a.date) - new Date(b.date));
 }
 
-//Filter today's notes
-function loadToday(notes) {
-    return notes.filter((note) => note.date === currentDate);
+//Filter today's tasks
+function loadToday(tasks) {
+    return tasks.filter((task) => task.date === currentDate);
 }
 
-//Retrieve user note categories from all notes
-function catLoader(notes) {
+//Retrieve user task categories from all tasks
+function catLoader(tasks) {
     let catList = [];
-    for (let note of notes) {
-        for (let category of note.categories) {
+    for (let task of tasks) {
+        for (let category of task.categories) {
             if (!catList.includes(category)) {
                 catList.push(category);
             }
@@ -193,12 +204,13 @@ function catLoader(notes) {
 }
 
 //Filter categories
-function catFilter(notes, id) {
+function catFilter(tasks, id) {
     let filteredCatList = [];
-    for (let note of notes) {
-        if (note.categories.includes(id)) {
-             filteredCatList.push(note);
+    for (let task of tasks) {
+        if (task.categories.includes(id)) {
+             filteredCatList.push(task);
         }
     }
     return filteredCatList;
 }
+
