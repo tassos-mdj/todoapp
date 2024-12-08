@@ -88,10 +88,10 @@ function createTask(container, currentTask, taskID) {
         dueDate.textContent = currentTask.date;
         task.appendChild(dueDate);
 
-        let categories = document.createElement('div');
-        categories.classList.add('categories');
-        categories.textContent = currentTask.categories;
-        task.appendChild(categories);
+        // let categories = document.createElement('div');
+        // categories.classList.add('categories');
+        // categories.textContent = currentTask.categories;
+        // task.appendChild(categories);
     
         container.appendChild(task);
 }
