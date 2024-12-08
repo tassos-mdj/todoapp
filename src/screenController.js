@@ -1,5 +1,6 @@
 import { login as loginFunction } from "./index.js"
 import hash from "./images/hash.svg"
+import { format } from "date-fns";
 
 export function welcomeScreen() {
     const login = document.querySelector('#login-button');
@@ -32,7 +33,7 @@ export function displayContent(section, userNotes) {
     dataArea.appendChild(heading);
     
     if (section === "calendar") {
-        loadCalendar()
+        loadCalendar(userNotes);
     } else {
         const article = document.createElement('article');
         article.classList.add('list-view');
@@ -46,10 +47,10 @@ function loadNotes(article, userNotes) {
         let task = document.createElement('div');
         task.classList.add('task');
 
-        let taskTitle = document.createElement('h3');
-        taskTitle.classList.add('task-title');
-        taskTitle.textContent = 'All clear, nothing on your plate!';
-        task.appendChild(taskTitle);
+        let taskDescription = document.createElement('p');
+        taskDescription.classList.add('task-description');
+        taskDescription.textContent = 'All clear!';
+        task.appendChild(taskDescription);
         article.appendChild(task);
     }
 
@@ -157,9 +158,7 @@ function loadCalendar(userNotes) {
         // Get the last date of the previous month
         let monthlastdate = new Date(year, month, 0).getDate();
 
-        // Variable to store the generated calendar HTML
-        // let lit = "";
-
+        
         // Loop to add the last dates of the previous month
         for (let i = dayone; i > 0; i--) {
             const li = document.createElement('div');
@@ -167,10 +166,12 @@ function loadCalendar(userNotes) {
             const p = document.createElement('p');
             p.textContent = monthlastdate - i + 1;
             li.appendChild(p);
+
+            // Load day's notes
+            loadNotes(li, userNotes.filter((note) => note.date === format(new Date(year, month - 1, monthlastdate - i + 1), "yyy-MM-dd")));
+
             container.appendChild(li);
-            // lit +=
-            //     `<li class="inactive">${monthlastdate - i + 1}</li>`;
-        }
+      }
 
 
         // Loop to add the dates of the current month
@@ -188,8 +189,11 @@ function loadCalendar(userNotes) {
                 const p = document.createElement('p');
                 p.textContent = i;
                 li.appendChild(p);
+
+                // Load day's notes
+                loadNotes(li, userNotes.filter((note) => note.date === format(new Date(year, month, i), "yyy-MM-dd")));
+
                 container.appendChild(li);
-            // lit += `<li class="${isToday}">${i}</li>`;
         }
 
         // Loop to add the first dates of the next month
@@ -200,13 +204,24 @@ function loadCalendar(userNotes) {
             const p = document.createElement('p');
             p.textContent = i - dayend + 1;
             li.appendChild(p);
+
+            // Load day's notes
+            loadNotes(li, userNotes.filter((note) => note.date === format(new Date(year, month + 1, i - dayend + 1), "yyy-MM-dd")));
+
             container.appendChild(li);
-            // lit += `<li class="inactive">${i - dayend + 1}</li>`
+        }
+
+        const tasks = document.querySelectorAll('.task');
+        for (let task of tasks) {
+            task.classList.remove('task');
+            task.classList.add('task-calendar');
         }
 
     }
 
 manipulate();
+
+
 
 }
 

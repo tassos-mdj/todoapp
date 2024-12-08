@@ -273,7 +273,8 @@ article.list-view .time-stamp {
 .calendar-container > div {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: min-content auto-fill;
+    grid-auto-rows: min-content;
+    gap: 0.5rem;
     padding: 0.5rem;
 }
 
@@ -291,4 +292,24 @@ article.list-view .time-stamp {
 .active {
     color: green;
     font-weight: bold;
+}
+
+.task-calendar {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    
+}
+
+.task-calendar .task-description,
+.task-calendar .due-date {
+    display: none;
+}
+
+.task-calendar .task-title {
+    margin: 0;
+    font-size: 0.7rem;
+    border-radius: 3px;
+    background-color: #8AB983;
+    padding: 0.1rem 0.3rem;
 }

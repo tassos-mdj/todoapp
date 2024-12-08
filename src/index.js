@@ -17,19 +17,19 @@ const index = [
             title: 'Groceries',
             description: 'Flour, Soap, Milk',
             categories: ['home', 'chores'],
-            date: '2025-01-22'
+            date: '2025-01-02'
         },
         {
             title: 'Bar supplies',
             description: 'vodka, whiskey, gin',
             categories: ['home', 'fun'],
-            date: '2025-01-15'
+            date: '2024-12-15'
         },
         {
             title: 'Food supplies',
             description: 'Item1, Item2, Item3',
             categories: ['home', 'family'],
-            date: '2024-12-30'
+            date: '2024-11-30'
         },
         {    
             title: 'Organize Party',
