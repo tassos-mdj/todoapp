@@ -117,7 +117,7 @@ function loadDashboard(activeUser) {
     for (let i = 0; i < lis.length; i++) {
         lis[i].addEventListener('click', function () {
             const toggle = document.querySelector('.toggle-view');
-            switch (lis[i].id.substring(0,4)) {
+            switch (lis[i].id.substring(0, 4)) {
                 case 'agen':
                     currentHeadingId = 'agenda';
                     displayContent('agenda', loadAgenda(userData.notes));
@@ -140,13 +140,14 @@ function loadDashboard(activeUser) {
                         case 'agenda':
                             displayContent('agenda', loadAgenda(userData.notes));
                             break;
-                        case 'today' :
+                        case 'today':
                             displayContent('today', loadToday(userData.notes));
                             break;
-                        case 'calendar' :
+                        case 'calendar':
                             displayContent('calendar', userData.notes);
                             break;
                     }
+                    break;
                 case 'cat-':
                     resetNonActiveCategory(lis[i].id);
                     lis[i].classList.add('active-menu-item');
@@ -163,7 +164,7 @@ function loadDashboard(activeUser) {
                     }
 
             }
-        });        
+        });
     }
 
 } 
