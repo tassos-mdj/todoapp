@@ -313,3 +313,23 @@ article.list-view .time-stamp {
     background-color: #8AB983;
     padding: 0.1rem 0.3rem;
 }
+
+dialog {
+    border-radius: 10px;
+    outline: none;
+    border: none !important;
+    padding: 0;
+    width: 50%;
+}
+
+#task-active-task {
+    gap: 2rem;
+}
+
+#task-active-task .task-title,
+#task-active-task .task-description,
+#task-active-task .due-date {
+    font-size: 1.4em;
+}
+
+

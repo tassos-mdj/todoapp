@@ -173,11 +173,16 @@ function loadDashboard(activeUser) {
         });
     }
 
-    let tasks = document.querySelectorAll('.task');
-    for (let task of tasks) {
-        task.addEventListener('click', () => displayTask(task));
+    let domTasks = document.querySelectorAll('.task');
+    for (let domTask of domTasks) {
+        domTask.addEventListener('click', () => {
+            for (let userTask of userData.tasks) {
+                if (`task-${userTask.id}` === domTask.id) {
+                    displayTask(userTask);
+                }
+            }
+    })
     }
-
 } 
 
 //Sort tasks for agenda

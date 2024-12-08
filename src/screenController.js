@@ -45,7 +45,7 @@ export function displayContent(section, userTasks) {
 export function displayTask(task) {
     const taskView = document.querySelector('#task-view');
     taskView.innerHTML = '';
-    createTask(taskView, task);
+    createTask(taskView, task, 'active-task');
     taskView.showModal();
 }
 
@@ -87,6 +87,11 @@ function createTask(container, currentTask, taskID) {
         dueDate.classList.add('due-date');
         dueDate.textContent = currentTask.date;
         task.appendChild(dueDate);
+
+        let categories = document.createElement('div');
+        categories.classList.add('categories');
+        categories.textContent = currentTask.categories;
+        task.appendChild(categories);
     
         container.appendChild(task);
 }
