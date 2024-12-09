@@ -122,22 +122,35 @@ function loadDashboard(activeUser) {
     let currentHeadingId = h2.id;
     for (let i = 0; i < lis.length; i++) {
         lis[i].addEventListener('click', function () {
+            console.log('clicked');
             const toggle = document.querySelector('.toggle-view');
             switch (lis[i].id.substring(0, 4)) {
                 case 'agen':
+                    resetVisualsRoutine(toggle, lis[i].id)
+                    // resetNonActiveCategory(lis[i].id);
                     currentHeadingId = 'agenda';
                     displayContent('agenda', loadAgenda(userData.tasks));
-                    toggle.classList.remove('inactive');
+                    // toggle.classList.remove('inactive');
+                    taskClick(userData);
+                    // document.getElementById('all-cat').classList.add('active-menu-item');
                     break;
                 case 'toda':
+                    resetVisualsRoutine(toggle, lis[i].id)
+                    // resetNonActiveCategory(lis[i].id);
                     currentHeadingId = 'today';
                     displayContent('today', loadToday(userData.tasks));
-                    toggle.classList.remove('inactive');
+                    // toggle.classList.remove('inactive');
+                    taskClick(userData);
+                    // document.getElementById('all-cat').classList.add('active-menu-item');
                     break;
                 case 'cale':
+                    resetVisualsRoutine(toggle, lis[i].id)
+                    // resetNonActiveCategory(lis[i].id);
                     currentHeadingId = 'calendar';
                     displayContent('calendar', userData.tasks);
-                    toggle.classList.add('inactive');
+                    // toggle.classList.add('inactive');
+                    taskClick(userData);
+                    // document.getElementById('all-cat').classList.add('active-menu-item');
                     break;
                 case 'all-':
                     resetNonActiveCategory(lis[i].id);
@@ -145,12 +158,15 @@ function loadDashboard(activeUser) {
                     switch (currentHeadingId) {
                         case 'agenda':
                             displayContent('agenda', loadAgenda(userData.tasks));
+                            taskClick(userData);
                             break;
                         case 'today':
                             displayContent('today', loadToday(userData.tasks));
+                            taskClick(userData);
                             break;
                         case 'calendar':
                             displayContent('calendar', userData.tasks);
+                            taskClick(userData);
                             break;
                     }
                     break;
@@ -161,18 +177,33 @@ function loadDashboard(activeUser) {
                     switch (currentHeadingId) {
                         case 'agenda':
                             displayContent('agenda', loadAgenda(catFilter(userData.tasks, passId)));
+                            taskClick(userData);
                             break;
                         case 'today':
                             displayContent('today', loadToday(catFilter(userData.tasks, passId)));
+                            taskClick(userData);
                             break;
                         case 'calendar':
                             displayContent('calendar', catFilter(userData.tasks, passId));
+                            taskClick(userData);
+                            break;
                     }
 
             }
         });
+        taskClick(userData);
     }
 
+    function resetVisualsRoutine(toggle, id) {
+        resetNonActiveCategory(id);
+        toggle.classList.remove('inactive');
+        document.getElementById('all-cat').classList.add('active-menu-item');
+    }
+    
+} 
+
+//Tasks click listener
+function taskClick(userData) {
     let domTasks = document.querySelectorAll('.task');
     for (let domTask of domTasks) {
         domTask.addEventListener('click', () => {
@@ -183,7 +214,7 @@ function loadDashboard(activeUser) {
             }
     })
     }
-} 
+}
 
 //Sort tasks for agenda
 function loadAgenda(tasks) {

@@ -1,17 +1,14 @@
 * {
-    font-family: Arial, Helvetica, sans-serif , sans-serif;
+    font-family: Arial, Helvetica, sans-serif, sans-serif;
     font-size: 14px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
 }
 
-
-
 body {
     margin: 0;
 }
-
 
 #wrapper {
     display: flex;
@@ -32,11 +29,6 @@ body {
     grid-area: 1 / 1 / 2 / 3;
     border-radius: 15px;
 }
-
-/* #welcome-headline {
-    grid-area: 2 / 1 / 3 / 3;
-    justify-self: center;
-} */
 
 #welcome-text {
     grid-area: 2 / 1 / 3 / 3;
@@ -64,10 +56,9 @@ body {
     display: grid;
     grid-template-columns: minmax(50px, 300px) 4fr;
     grid-template-rows: 5rem auto;
-    margin:0;
+    margin: 0;
     padding: 0;
     min-height: 100vh;
-
 }
 
 aside {
@@ -79,8 +70,6 @@ aside {
     align-items: stretch;
     max-height: 100vh;
     background-color: #F8F8FF;
-
-    
 }
 
 ul {
@@ -90,7 +79,8 @@ ul {
 }
 
 
-menu, nav {
+menu,
+nav {
     padding: 0;
 }
 
@@ -104,11 +94,11 @@ aside li {
     padding: 0 10%;
 }
 
-.user-info , aside li {
+.user-info,
+aside li {
     display: flex;
     align-items: center;
     gap: 1rem;
-    
 }
 
 aside p {
@@ -180,7 +170,11 @@ article.list-view {
 }
 
 .task {
-    padding: 1rem 1.5rem;
+    cursor: pointer;
+}
+
+
+article+.task {
     border: 1px solid #F8F8FF;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
@@ -199,7 +193,6 @@ article.list-view .task {
 }
 
 .task-title {
-    
     grid-area: 1 / 1 / 2 / 2;
 }
 
@@ -229,48 +222,48 @@ article.list-view .time-stamp {
 
 .calendar-container {
     display: grid;
-    grid-template-columns: repeat(7,1fr);
+    grid-template-columns: repeat(7, 1fr);
     grid-template-rows: 6rem;
     grid-auto-rows: 6rem;
     margin: 2rem;
     overflow: hidden;
+    max-width: 1000px;
 }
 
-.calendar-container > div {
+.calendar-container>div {
     position: relative;
-
 }
 
-.calendar-container > div::after,
-.calendar-container > div::before {
+.calendar-container>div::after,
+.calendar-container>div::before {
     content: "";
     background-color: black;
     position: absolute;
 }
 
-.calendar-container > div:nth-child(1):after {
+.calendar-container>div:nth-child(1):after {
     width: 100vw;
     height: 1px;
-    top:0;
-    left:0;
+    top: 0;
+    left: 0;
 }
 
-.calendar-container > div:nth-child(1n) {
+.calendar-container>div:nth-child(1n) {
     border-bottom: 1px solid black;
 }
 
-.calendar-container > div::before {
+.calendar-container>div::before {
     width: 1px;
     height: 100vh;
     top: 0;
     left: 0;
 }
 
-.calendar-container > div:nth-child(7n) {
+.calendar-container>div:nth-child(7n) {
     border-right: 1px solid black;
 }
 
-.calendar-container > div {
+.calendar-container>div {
     display: grid;
     grid-template-columns: 1fr;
     grid-auto-rows: min-content;
@@ -294,11 +287,11 @@ article.list-view .time-stamp {
     font-weight: bold;
 }
 
+
 .task-calendar {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    
 }
 
 .task-calendar .task-description,
@@ -322,8 +315,11 @@ dialog {
     width: 50%;
 }
 
+
+
 #task-active-task {
     gap: 2rem;
+    padding: 1rem 1.5rem;
 }
 
 #task-active-task .task-title,
@@ -331,5 +327,3 @@ dialog {
 #task-active-task .due-date {
     font-size: 1.4em;
 }
-
-

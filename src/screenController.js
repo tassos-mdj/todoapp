@@ -230,7 +230,6 @@ function loadCalendar(userTasks) {
 
         const tasks = document.querySelectorAll('.task');
         for (let task of tasks) {
-            task.classList.remove('task');
             task.classList.add('task-calendar');
         }
 
