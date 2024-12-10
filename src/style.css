@@ -171,15 +171,18 @@ article.list-view {
 
 .task {
     cursor: pointer;
+    gap: 1rem;
+    display: grid;
 }
 
 
-article+.task {
+article .task {
     border: 1px solid #F8F8FF;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     display: grid;
     grid-template-columns: 1fr;
+    padding: 1rem;
 }
 
 
@@ -194,16 +197,31 @@ article.list-view .task {
 
 .task-title {
     grid-area: 1 / 1 / 2 / 2;
+    margin: 0;
 }
 
 p.task-description {
-    margin-top: 0;
+    margin: 0;
     font-size: 0.9rem;
     color: gray;
 }
 
-.due-date {
+.task-categories {
     grid-area: 3 / 1 / 4 / 2;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    gap: 1rem;
+}
+
+.task-category {
+    border: 2px solid;
+    border-radius: 6px;
+    padding: 0.2rem 0.5rem;
+}
+
+.due-date {
+    grid-area: 4 / 1 / 5 / 2;
     display: flex;
     justify-content: start;
     align-items: center;
@@ -295,7 +313,8 @@ article.list-view .time-stamp {
 }
 
 .task-calendar .task-description,
-.task-calendar .due-date {
+.task-calendar .due-date,
+.task-calendar .task-categories {
     display: none;
 }
 
@@ -318,12 +337,22 @@ dialog {
 
 
 #task-active-task {
-    gap: 2rem;
-    padding: 1rem 1.5rem;
+    display: grid;
+    gap: 1.5rem;
+    padding: 2rem 2.5rem;
 }
 
-#task-active-task .task-title,
-#task-active-task .task-description,
-#task-active-task .due-date {
+#task-active-task .task-title {
     font-size: 1.4em;
+}
+
+
+span.task-category {
+    border-color: #8AB983;
+}
+
+
+div#task-active-task > *:nth-child(-n + 3) {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 1rem;
 }
