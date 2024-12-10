@@ -66,12 +66,14 @@ const index = [
 ];
 
 export let currentIndex = index;
+let userData;
 
 //hide welcome section after login
 export function login() {
     const usernameInput = document.querySelector('#username');
     const wrapper = document.querySelector('#wrapper');
     wrapper.style.display = 'none';
+    
     loadDashboard(usernameInput.value);
 }
 welcomeScreen();
@@ -79,7 +81,7 @@ welcomeScreen();
 
 function loadDashboard(activeUser) {
     //find user
-    const userData = currentIndex.reduce((final, entry) => {
+    userData = currentIndex.reduce((final, entry) => {
         if (entry.username === activeUser){
             final = entry;
             
@@ -248,5 +250,29 @@ function catFilter(tasks, id) {
         }
     }
     return filteredCatList;
+}
+
+//Remove categories
+export function removeCategory(taskContainer, task, category) {
+    task.categories = task.categories.filter(item => item !== category);
+    taskContainer.innerHTML = '';
+    displayTask(task);
+    const h2 = document.querySelector('h2');
+    
+    switch (h2.id) {
+        case 'agenda':
+            displayContent('agenda', loadAgenda(userData.tasks));
+            taskClick(userData);
+            break;
+        case 'today':
+            displayContent('today', loadToday(userData.tasks));
+            taskClick(userData);
+            break;
+        case 'calendar':
+            displayContent('calendar', userData.tasks);
+            taskClick(userData);
+            break;
+
+    }
 }
 

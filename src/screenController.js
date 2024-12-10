@@ -1,6 +1,7 @@
 import { login as loginFunction } from "./index.js"
 import hash from "./images/hash.svg"
-import { format } from "date-fns";
+import { add, format } from "date-fns";
+import { removeCategory } from "./index.js";
 
 export function welcomeScreen() {
     const login = document.querySelector('#login-button');
@@ -40,6 +41,7 @@ export function displayContent(section, userTasks) {
         loadTasks(article, userTasks);
         dataArea.appendChild(article);
     }
+    
 }
 
 export function displayTask(task) {
@@ -70,35 +72,49 @@ function loadTasks(article, userTasks) {
 
 function createTask(container, currentTask, taskID) {
     let task = document.createElement('div');
-        task.classList.add('task');
-        task.setAttribute('id', `task-${taskID}`);
+    task.classList.add('task');
+    task.setAttribute('id', `task-${taskID}`);
 
-        let taskTitle = document.createElement('h3');
-        taskTitle.classList.add('task-title');
-        taskTitle.textContent = currentTask.title;
-        task.appendChild(taskTitle);
+    let taskTitle = document.createElement('h3');
+    taskTitle.classList.add('task-title');
+    taskTitle.textContent = currentTask.title;
+    task.appendChild(taskTitle);
 
-        let taskDescription = document.createElement('p');
-        taskDescription.classList.add('task-description');
-        taskDescription.textContent = currentTask.description;
-        task.appendChild(taskDescription);
+    let taskDescription = document.createElement('p');
+    taskDescription.classList.add('task-description');
+    taskDescription.textContent = currentTask.description;
+    task.appendChild(taskDescription);
 
-        let categories = document.createElement('div');
-        categories.classList.add('task-categories');
-        for (let category of currentTask.categories) {
-            let span = document.createElement('span');
-            span.classList.add('task-category');
-            span.textContent = '#' + category;
-            categories.appendChild(span);
-        }
-        task.appendChild(categories);
-
-        let dueDate = document.createElement('div');
-        dueDate.classList.add('due-date');
-        dueDate.textContent = currentTask.date;
-        task.appendChild(dueDate);
+    const categories = document.createElement('div');
+    categories.classList.add('task-categories');
     
-        container.appendChild(task);
+    for (let category of currentTask.categories) {
+        let span = document.createElement('span');
+        span.classList.add('task-category');
+
+        // Add delete button on active task only
+        const link = document.createElement('a');
+        link.addEventListener('click', e => task.id === 'task-active-task' ? removeCategory(task, currentTask, category) : console.log('Task open'));
+        link.textContent = 'x';
+        span.textContent = '#' + category;
+        if (task.id === 'task-active-task') { span.appendChild(link); }
+
+        categories.appendChild(span);
+    }
+    // Add + button for adding categories
+    const addButton = document.createElement('span');
+    addButton.classList.add('task-category-add-button');
+    addButton.textContent = '+';
+    if (task.id === 'task-active-task') {categories.appendChild(addButton);}
+
+    task.appendChild(categories);
+
+    let dueDate = document.createElement('div');
+    dueDate.classList.add('due-date');
+    dueDate.textContent = currentTask.date;
+    task.appendChild(dueDate);
+
+    container.appendChild(task);
 }
 
 function resetActiveMenuItems() {

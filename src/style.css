@@ -209,15 +209,43 @@ p.task-description {
 .task-categories {
     grid-area: 3 / 1 / 4 / 2;
     display: flex;
-    flex-flow: row wrap;
     justify-content: flex-start;
+    align-items: center;
     gap: 1rem;
 }
+
 
 .task-category {
     border: 2px solid;
     border-radius: 6px;
-    padding: 0.2rem 0.5rem;
+    border-color: #8AB983;
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.4rem 1.7rem;
+}
+
+.task-category a {
+    opacity: 0;
+    border: none;
+    border-radius: 50px;
+    color: red;
+    font-weight: bold;
+    font-size: 0.8rem;
+    padding: 0 0.25rem;
+}
+
+span:hover > a {
+    transform: translate(5px , -5px);
+    opacity: 1;
+}
+
+.task-category-add-button {
+    justify-content: flex-end;
+    
+    font-size: 1.5rem;
+    font-weight: 100;
+    color: #ddd;
+    cursor: pointer;
 }
 
 .due-date {
@@ -332,6 +360,7 @@ dialog {
     border: none !important;
     padding: 0;
     width: 50%;
+    max-width: 500px;
 }
 
 
@@ -346,13 +375,12 @@ dialog {
     font-size: 1.4em;
 }
 
-
-span.task-category {
-    border-color: #8AB983;
+#task-active-task .task-category {
+    padding: 0.4rem 0.8rem 0.4rem 1.7rem;
 }
-
 
 div#task-active-task > *:nth-child(-n + 3) {
     border-bottom: 1px solid #ddd;
     padding-bottom: 1rem;
 }
+
