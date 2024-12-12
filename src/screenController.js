@@ -95,7 +95,7 @@ function createTask(container, currentTask, taskID) {
         // Add delete button on active task only
         const link = document.createElement('a');
         link.addEventListener('click', e => task.id === 'task-active-task' ? removeCategory(task, currentTask, category) : console.log('Task open'));
-        link.textContent = 'x';
+        link.textContent = ' x';
         span.textContent = '#' + category;
         if (task.id === 'task-active-task') { span.appendChild(link); }
 
