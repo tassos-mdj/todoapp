@@ -3,6 +3,7 @@ import { Storage } from "./storageController.js";
 import { user } from "./user.js";
 import { createDashboard, welcomeScreen, displayContent, displayCategories, resetNonActiveCategory, displayTask } from "./screenController.js";
 import { format } from "date-fns"; 
+import { Task } from "./task.js";
 
 
 
