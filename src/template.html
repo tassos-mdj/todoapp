@@ -59,20 +59,18 @@
         </header>
         <dialog id="new-task">
             <form id="new-task-form">
+                <legend>What's on your mind?</legend>
                 <div class="field">
-                    <label for="new-title">Title:</label>
-                    <input type="text" name="new-title" id="new-title">
+                    <input type="text" name="new-title" id="new-title" placeholder="Title">
                     <small></small>
                 </div>
                 <div class="field">
-                    <label for="new-description">Description:</label>
-                    <input type="text" name="new-descriprion" id="new-description">
+                    <input type="text" name="new-descriprion" id="new-description" placeholder="Description">
                 </div>
                 <div class="field">
-                    <label for="new-categories">Categories (comma seperated):</label>
-                    <input type="text" name="new-categories" id="new-categories">
+                    <input type="text" name="new-categories" id="new-categories" placeholder="Categories (e.g. 'category1, category2, ...')">
                 </div>
-                <div class="field"><input type="submit" value="Add task" id="submit-task"></div>
+                <input type="submit" value="Add task" id="submit-task">
             </form>
         </dialog>
         <dialog id="task-view"></dialog>
