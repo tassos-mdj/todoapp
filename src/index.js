@@ -18,28 +18,28 @@ const index = [
             title: 'Groceries',
             description: 'Flour, Soap, Milk',
             categories: ['home', 'chores'],
-            date: '2025-01-02',
+            duedate: '2025-01-02',
             id: 0
         },
         {
             title: 'Bar supplies',
             description: 'vodka, whiskey, gin',
             categories: ['home', 'fun'],
-            date: '2024-12-15',
+            duedate: '2024-12-15',
             id: 1
         },
         {
             title: 'Food supplies',
             description: 'Item1, Item2, Item3',
             categories: ['home', 'family'],
-            date: '2024-11-30',
+            duedate: '2024-11-30',
             id: 2
         },
         {    
             title: 'Organize Party',
             description: 'Buy booze, send invitations',
             categories: ['fun'],
-            date: '2024-12-28',
+            duedate: '2024-12-28',
             id: 3
         },
     ]
@@ -52,14 +52,14 @@ const index = [
                 title: 'Vacation Planning',
                 description: 'Get tickets, renew passport',
                 categories: ['vacation', 'family', 'home'],
-                date: '2024-12-27',
+                duedate: '2024-12-27',
                 id: 0
             },
             {
                 title: 'Gym routine',
                 description: 'Stand-ups, sit-ups, pull-ups, push-ups',
                 categories: ['health', 'fun'],
-                date: '2024-12-31',
+                duedate: '2024-12-31',
                 id: 1
             }
         ]
@@ -196,6 +196,10 @@ function loadDashboard(activeUser) {
         const newTask = document.querySelector('#new-task');
         newTask.showModal();
         const form = document.getElementById('new-task-form');
+        const dateField = document.getElementById('new-date');
+        dateField.value = format(new Date(), 'yyyy-MM-dd');
+        const closeBtn = document.querySelector('.close');
+        closeBtn.addEventListener('click', (e) => newTask.close());
 
         // show a message with a type of the input
         function showMessage(input, message, type) {
@@ -233,7 +237,13 @@ function loadDashboard(activeUser) {
             let nameValid = hasValue(form.elements["new-title"], TITLE_REQUIRED);
             
             if (nameValid) {
-                alert("Demo only. No form was posted.");
+                const inputCategories = form.elements[2].value.split(',');
+                const trimmedInputCategories = inputCategories.map(cat => cat.trim());
+                const newEntry = new Task({title: form.elements[0].value, description: form.elements[1].value, categories: trimmedInputCategories, duedate: form.elements[3].value});
+                console.log(newEntry);
+                userData.tasks.push(newEntry);
+                loadDashboard(activeUser);
+                newTask.close();
             }
         });
 
@@ -264,12 +274,12 @@ function taskClick(userData) {
 
 //Sort tasks for agenda
 function loadAgenda(tasks) {
-    return tasks.sort((a,b) => new Date(a.date) - new Date(b.date));
+    return tasks.sort((a,b) => new Date(a.duedate) - new Date(b.duedate));
 }
 
 //Filter today's tasks
 function loadToday(tasks) {
-    return tasks.filter((task) => task.date === currentDate);
+    return tasks.filter((task) => task.duedate === currentDate);
 }
 
 //Retrieve user task categories from all tasks
@@ -302,7 +312,7 @@ export function removeCategory(taskContainer, task, category) {
     taskContainer.innerHTML = '';
     displayTask(task);
     const h2 = document.querySelector('h2');
-    
+    displayCategories(catLoader(userData.tasks));
     switch (h2.id) {
         case 'agenda':
             displayContent('agenda', loadAgenda(userData.tasks));

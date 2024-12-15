@@ -59,16 +59,21 @@
         </header>
         <dialog id="new-task">
             <form id="new-task-form">
+                <img src="./images/x-circle.svg" alt="Close dialog button" class="close">
                 <legend>What's on your mind?</legend>
-                <div class="field">
+                <div id="input-title-field">
                     <input type="text" name="new-title" id="new-title" placeholder="Title">
                     <small></small>
                 </div>
-                <div class="field">
+                <div>
                     <input type="text" name="new-descriprion" id="new-description" placeholder="Description">
                 </div>
-                <div class="field">
+                <div>
                     <input type="text" name="new-categories" id="new-categories" placeholder="Categories (e.g. 'category1, category2, ...')">
+                </div>
+                <div id="input-date-field">
+                    <label for="new-date">Due date:</label>
+                    <input type="date" name="new-date" id="new-date">
                 </div>
                 <input type="submit" value="Add task" id="submit-task">
             </form>

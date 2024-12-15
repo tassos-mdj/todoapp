@@ -1,5 +1,6 @@
 import { login as loginFunction } from "./index.js"
 import hash from "./images/hash.svg"
+import closeButton from "./images/x-circle.svg"
 import { add, format } from "date-fns";
 import { removeCategory } from "./index.js";
 
@@ -47,6 +48,12 @@ export function displayContent(section, userTasks) {
 export function displayTask(task) {
     const taskView = document.querySelector('#task-view');
     taskView.innerHTML = '';
+    const closeBtn = new Image();
+    closeBtn.src = closeButton;
+    closeBtn.alt = 'Close button';
+    closeBtn.classList.add('close');
+    taskView.appendChild(closeBtn);
+    closeBtn.addEventListener('click', (e) => taskView.close());
     createTask(taskView, task, 'active-task');
     taskView.showModal();
 }
@@ -111,7 +118,7 @@ function createTask(container, currentTask, taskID) {
 
     let dueDate = document.createElement('div');
     dueDate.classList.add('due-date');
-    dueDate.textContent = currentTask.date;
+    dueDate.textContent = currentTask.duedate;
     task.appendChild(dueDate);
 
     container.appendChild(task);
@@ -135,11 +142,21 @@ export function resetNonActiveCategory(id) {
 
 export function displayCategories(catList) {
     const catUl = document.getElementById('cat-ul');
+    catUl.innerHTML ='';
+    const allCatLi = document.createElement('li');
+    allCatLi.setAttribute('id', 'all-cat');
+    let img = new Image();
+    img.src = hash;
+    const allCatP  = document.createElement('p');
+        allCatP.textContent = 'All Categories';
+        allCatLi.appendChild(img);
+        allCatLi.appendChild(allCatP);
+        catUl.appendChild(allCatLi);
     for (let item of catList) {
         let itemId = 'cat-' + item.toLowerCase();
         const li = document.createElement('li');
         li.setAttribute('id', itemId);
-        const img = new Image();
+        img = new Image();
         img.src = hash;
         const p  = document.createElement('p');
         p.textContent = item;
@@ -206,7 +223,7 @@ function loadCalendar(userTasks) {
             li.appendChild(p);
 
             // Load day's tasks
-            loadTasks(li, userTasks.filter((task) => task.date === format(new Date(year, month - 1, monthlastdate - i + 1), "yyy-MM-dd")));
+            loadTasks(li, userTasks.filter((task) => task.duedate === format(new Date(year, month - 1, monthlastdate - i + 1), "yyy-MM-dd")));
 
             container.appendChild(li);
       }
@@ -229,7 +246,7 @@ function loadCalendar(userTasks) {
                 li.appendChild(p);
 
                 // Load day's tasks
-                loadTasks(li, userTasks.filter((task) => task.date === format(new Date(year, month, i), "yyy-MM-dd")));
+                loadTasks(li, userTasks.filter((task) => task.duedate === format(new Date(year, month, i), "yyy-MM-dd")));
 
                 container.appendChild(li);
         }
@@ -244,7 +261,7 @@ function loadCalendar(userTasks) {
             li.appendChild(p);
 
             // Load day's tasks
-            loadTasks(li, userTasks.filter((task) => task.date === format(new Date(year, month + 1, i - dayend + 1), "yyy-MM-dd")));
+            loadTasks(li, userTasks.filter((task) => task.duedate === format(new Date(year, month + 1, i - dayend + 1), "yyy-MM-dd")));
 
             container.appendChild(li);
         }

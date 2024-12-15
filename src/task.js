@@ -5,7 +5,7 @@ export class Task {
         this.title = obj.title;
         this.description = obj.description || '';
         this.categories = obj.categories || [];
-        this.date = format(new Date(), 'yyyy-MM-dd');
+        this.duedate = obj.duedate || format(new Date(), 'yyyy-MM-dd');
         this.id = obj.id;
     }
 

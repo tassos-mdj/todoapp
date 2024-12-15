@@ -363,6 +363,13 @@ dialog {
     max-width: 500px;
 }
 
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
 dialog::backdrop {
     backdrop-filter: blur(4px);
 }
@@ -387,7 +394,11 @@ div#task-active-task > *:nth-child(-n + 3) {
     padding-bottom: 1rem;
 }
 
-#new-task-form input[type=text] {
+#new-task-form {
+    grid-auto-rows: 2rem;
+}
+
+#new-task-form input[type=text], #new-date {
     width: 100%;
     border-radius: 10px;
     font-size: 1.2rem;
@@ -407,6 +418,33 @@ div#task-active-task > *:nth-child(-n + 3) {
     font-weight: 600;
     border-radius: 15px;
     border: none;
-    padding: 0.5em 2em;
+    padding: 0.3em 2em;
     background-color: #8AB983;
+    align-self: center;
 }
+
+#input-title-field {
+    overflow: visible;
+}
+
+#input-title-field small {
+    color: red;
+}
+
+#input-date-field {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+label[for=new-date] {
+    font-size: 1.3rem;
+    flex: 0 0 auto;
+
+}
+
+#new-date {
+    width: 100%;
+}
+
