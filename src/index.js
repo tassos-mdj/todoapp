@@ -68,6 +68,8 @@ const index = [
 
 export let currentIndex = index;
 let userData;
+let activeUser;
+let dashboardLoaded = 0;
 
 //hide welcome section after login
 export function login() {
@@ -75,7 +77,8 @@ export function login() {
     const wrapper = document.querySelector('#wrapper');
     wrapper.style.display = 'none';
     
-    loadDashboard(usernameInput.value);
+    activeUser = usernameInput.value;
+    loadDashboard(activeUser);
 }
 welcomeScreen();
 
@@ -104,8 +107,11 @@ function loadDashboard(activeUser) {
 
     //toggle view functionality
     const toogleView = document.querySelector('.toggle-view');
+    dashboardLoaded === 0 ? toogleView.addEventListener('click', viewListener) : console.log('Event listener already present'); 
+    const controller = new AbortController;
 
-    toogleView.addEventListener('click', function () {
+    function viewListener() {
+        
         const article = document.querySelector('article');
         if (article) {
             if (article.classList.contains('list-view')) {
@@ -114,12 +120,14 @@ function loadDashboard(activeUser) {
                 article.classList.replace('cards-view', 'list-view');
             }
         }
-
-    })
     
+    }
+    
+    console.log(dashboardLoaded);
     
     menuListenersLoader(userData);
     taskListenersLoader(userData);
+    dashboardLoaded += 1;
 } 
 
 function resetVisualsRoutine(toggle, id) {
