@@ -4,7 +4,7 @@ export function user(username) {
         return {
             "username": username,
             "view" : "cards",
-            "notes" : []
+            "tasks" : []
         }      
     }
 

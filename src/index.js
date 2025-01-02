@@ -98,16 +98,18 @@ function loadDashboard(activeUser) {
         let addUser = user(activeUser);
         currentIndex.push(addUser);
         loadDashboard(activeUser);
+        console.log('Login check: new user added');
     } else {
         loadAgenda(userData.tasks);
         createDashboard(userData);
         displayCategories(catLoader(userData.tasks));
         document.getElementById('all-cat').classList.add('active-menu-item');
+        console.log('Login check: user already exists, loading dashboard');
     }
 
     //toggle view functionality
     const toogleView = document.querySelector('.toggle-view');
-    dashboardLoaded === 0 ? toogleView.addEventListener('click', viewListener) : console.log('Event listener already present'); 
+    dashboardLoaded === 0 ? toogleView.addEventListener('click', viewListener) : console.log('Toggle view Event listener already present'); 
     const controller = new AbortController;
 
     function viewListener() {
@@ -125,7 +127,7 @@ function loadDashboard(activeUser) {
     
     console.log(dashboardLoaded);
     
-    menuListenersLoader(userData);
+    dashboardLoaded === 0 ? menuListenersLoader(userData): console.log('Menu Event listener already present'); 
     taskListenersLoader(userData);
     dashboardLoaded += 1;
 } 
@@ -139,7 +141,8 @@ function resetVisualsRoutine(toggle, id) {
 function taskAdd() {
     const newTask = document.querySelector('#new-task');
     newTask.showModal();
-    const form = document.getElementById('new-task-form');
+    let form = document.getElementById('new-task-form');
+    const formDefault = form;
     const dateField = document.getElementById('new-date');
     dateField.value = format(new Date(), 'yyyy-MM-dd');
     const closeBtn = document.querySelector('.close');
@@ -187,6 +190,7 @@ function taskAdd() {
             console.log(newEntry);
             userData.tasks.push(newEntry);
             loadDashboard(activeUser);
+            form.innerHTML = formDefault.innerHTML;
             newTask.close();
         }
     });
@@ -194,10 +198,6 @@ function taskAdd() {
 
 }
 
-// //Tasks click listener
-// function taskClick(userData) {
-    
-// }
 
 function menuListenersLoader(userData){
     //Menu items functionality
@@ -232,6 +232,36 @@ function menuListenersLoader(userData){
                     displayContent('calendar', userData.tasks);
                     taskListenersLoader(userData);
                     break;
+                
+
+            }
+        });
+    }
+    
+}
+
+function taskListenersLoader(userData){
+
+    //Tasks click listener
+    let domTasks = document.querySelectorAll('.task');
+    for (let domTask of domTasks) {
+        domTask.addEventListener('click', () => {
+            for (let userTask of userData.tasks) {
+                if (`task-${userTask.id}` === domTask.id) {
+                    displayTask(userTask);
+                }
+            }
+    })
+    }
+
+    //Categories Click Listener
+    const domCategories = document.querySelector('nav');
+    const lis = domCategories.querySelectorAll('li');
+    const h2 = document.querySelector('.heading');
+    let currentHeadingId = h2.id;
+    for (let i = 0; i < lis.length; i++) {
+        lis[i].addEventListener('click', function () {
+            switch (lis[i].id.substring(0, 4)) {
                 case 'all-':
                     resetNonActiveCategory(lis[i].id);
                     lis[i].classList.add('active-menu-item');
@@ -268,25 +298,10 @@ function menuListenersLoader(userData){
                             taskListenersLoader(userData);
                             break;
                     }
-
             }
         });
     }
     
-}
-
-function taskListenersLoader(userData){
-    //Tasks click listener
-    let domTasks = document.querySelectorAll('.task');
-    for (let domTask of domTasks) {
-        domTask.addEventListener('click', () => {
-            for (let userTask of userData.tasks) {
-                if (`task-${userTask.id}` === domTask.id) {
-                    displayTask(userTask);
-                }
-            }
-    })
-    }
 }
 
 //Sort tasks for agenda
@@ -328,22 +343,6 @@ export function removeCategory(taskContainer, task, category) {
     task.categories = task.categories.filter(item => item !== category);
     taskContainer.innerHTML = '';
     displayTask(task);
-    const h2 = document.querySelector('h2');
-    displayCategories(catLoader(userData.tasks));
-    switch (h2.id) {
-        case 'agenda':
-            displayContent('agenda', loadAgenda(userData.tasks));
-            menuListenersLoader(userData);
-            break;
-        case 'today':
-            displayContent('today', loadToday(userData.tasks));
-            menuListenersLoader(userData);
-            break;
-        case 'calendar':
-            displayContent('calendar', userData.tasks);
-            menuListenersLoader(userData);
-            break;
-
-    }
+    loadDashboard(activeUser);
 }
 
