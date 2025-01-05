@@ -186,7 +186,7 @@ function taskAdd() {
         if (nameValid) {
             const inputCategories = form.elements[2].value.split(',');
             const trimmedInputCategories = inputCategories.map(cat => cat.trim());
-            const newEntry = new Task({title: form.elements[0].value, description: form.elements[1].value, categories: trimmedInputCategories, duedate: form.elements[3].value});
+            const newEntry = new Task({title: form.elements[0].value, description: form.elements[1].value, categories: trimmedInputCategories, duedate: form.elements[3].value, id: userData.tasks.length});
             console.log(newEntry);
             userData.tasks.push(newEntry);
             loadDashboard(activeUser);
@@ -195,7 +195,7 @@ function taskAdd() {
         }
     });
 
-
+console.log(currentIndex);
 }
 
 
