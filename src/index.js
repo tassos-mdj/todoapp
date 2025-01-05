@@ -124,9 +124,7 @@ function loadDashboard(activeUser) {
         }
     
     }
-    
-    console.log(dashboardLoaded);
-    
+   
     dashboardLoaded === 0 ? menuListenersLoader(userData): console.log('Menu Event listener already present'); 
     taskListenersLoader(userData);
     dashboardLoaded += 1;
@@ -187,7 +185,7 @@ function taskAdd() {
             const inputCategories = form.elements[2].value.split(',');
             const trimmedInputCategories = inputCategories.map(cat => cat.trim());
             const newEntry = new Task({title: form.elements[0].value, description: form.elements[1].value, categories: trimmedInputCategories, duedate: form.elements[3].value, id: userData.tasks.length});
-            console.log(newEntry);
+            console.log("New task: ",newEntry);
             userData.tasks.push(newEntry);
             loadDashboard(activeUser);
             form.innerHTML = formDefault.innerHTML;
@@ -195,7 +193,6 @@ function taskAdd() {
         }
     });
 
-console.log(currentIndex);
 }
 
 
@@ -207,11 +204,9 @@ function menuListenersLoader(userData){
     let currentHeadingId = h2.id;
     for (let i = 0; i < lis.length; i++) {
         lis[i].addEventListener('click', function () {
-            console.log('clicked');
             const toggle = document.querySelector('.toggle-view');
             switch (lis[i].id.substring(0, 4)) {
                 case 'task':
-                    console.log(lis[i].id);
                     taskAdd();
                     break;
                 case 'agen':
