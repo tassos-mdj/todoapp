@@ -71,17 +71,24 @@ let userData;
 let activeUser;
 let dashboardLoaded = 0;
 
+const usernameInput = document.querySelector('#username');
+const wrapper = document.querySelector('#wrapper');
+
 //hide welcome section after login
 export function login() {
-    const usernameInput = document.querySelector('#username');
-    const wrapper = document.querySelector('#wrapper');
     wrapper.style.display = 'none';
-    
     activeUser = usernameInput.value;
     loadDashboard(activeUser);
 }
 welcomeScreen();
 
+function logout() {
+    usernameInput.value = '';
+    activeUser = '';
+    const container = document.querySelector('.container');
+    container.classList.add('hidden');
+    wrapper.style.display = 'flex';
+}
 
 function loadDashboard(activeUser) {
     //find user
@@ -238,7 +245,9 @@ function menuListenersLoader(userData){
                     displayContent('calendar', userData.tasks);
                     taskListenersLoader(userData);
                     break;
-                
+                case 'logo':
+                    logout();
+                    break;
 
             }
         });
