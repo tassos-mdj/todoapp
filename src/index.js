@@ -1,5 +1,5 @@
 import "./style.css";
-import { Storage } from "./storageController.js";
+import { updateIndex } from "./storageController.js";
 import { user } from "./user.js";
 import { createDashboard, welcomeScreen, displayContent, displayCategories, resetNonActiveCategory, displayTask } from "./screenController.js";
 import { format } from "date-fns"; 
@@ -66,7 +66,7 @@ const index = [
     }
 ];
 
-export let currentIndex = index;
+export let currentIndex = updateIndex();
 let userData;
 let activeUser;
 let dashboardLoaded = 0;
@@ -97,6 +97,7 @@ function loadDashboard(activeUser) {
     if (Object.keys(userData).length === 0) {
         let addUser = user(activeUser);
         currentIndex.push(addUser);
+        updateIndex(currentIndex);
         loadDashboard(activeUser);
         console.log('Login check: new user added');
     } else {
@@ -128,6 +129,16 @@ function loadDashboard(activeUser) {
     dashboardLoaded === 0 ? menuListenersLoader(userData): console.log('Menu Event listener already present'); 
     taskListenersLoader(userData);
     dashboardLoaded += 1;
+
+
+    for (let entry of currentIndex) {
+        if (entry.username === activeUser) {
+            let userIndex = currentIndex.indexOf(entry);
+            currentIndex[userIndex] = userData;
+        }
+    }
+
+    updateIndex(currentIndex);
 } 
 
 function resetVisualsRoutine(toggle, id) {
