@@ -9,62 +9,62 @@ import { Task } from "./task.js";
 
 const currentDate = format(new Date(), "yyyy-MM-dd");
 
-const index = [
-    {
-    username: 'Tassos',
-    view: 'cards',
-    tasks: [
-        {
-            title: 'Groceries',
-            description: 'Flour, Soap, Milk',
-            categories: ['home', 'chores'],
-            duedate: '2025-01-02',
-            id: 0
-        },
-        {
-            title: 'Bar supplies',
-            description: 'vodka, whiskey, gin',
-            categories: ['home', 'fun'],
-            duedate: '2024-12-15',
-            id: 1
-        },
-        {
-            title: 'Food supplies',
-            description: 'Item1, Item2, Item3',
-            categories: ['home', 'family'],
-            duedate: '2024-11-30',
-            id: 2
-        },
-        {    
-            title: 'Organize Party',
-            description: 'Buy booze, send invitations',
-            categories: ['fun'],
-            duedate: '2024-12-28',
-            id: 3
-        },
-    ]
-    },
-    {
-        username: 'Agapi',
-        view: 'list',
-        tasks: [
-            {
-                title: 'Vacation Planning',
-                description: 'Get tickets, renew passport',
-                categories: ['vacation', 'family', 'home'],
-                duedate: '2024-12-27',
-                id: 0
-            },
-            {
-                title: 'Gym routine',
-                description: 'Stand-ups, sit-ups, pull-ups, push-ups',
-                categories: ['health', 'fun'],
-                duedate: '2024-12-31',
-                id: 1
-            }
-        ]
-    }
-];
+// const index = [
+//     {
+//     username: 'Tassos',
+//     view: 'cards',
+//     tasks: [
+//         {
+//             title: 'Groceries',
+//             description: 'Flour, Soap, Milk',
+//             categories: ['home', 'chores'],
+//             duedate: '2025-01-02',
+//             id: 0
+//         },
+//         {
+//             title: 'Bar supplies',
+//             description: 'vodka, whiskey, gin',
+//             categories: ['home', 'fun'],
+//             duedate: '2024-12-15',
+//             id: 1
+//         },
+//         {
+//             title: 'Food supplies',
+//             description: 'Item1, Item2, Item3',
+//             categories: ['home', 'family'],
+//             duedate: '2024-11-30',
+//             id: 2
+//         },
+//         {    
+//             title: 'Organize Party',
+//             description: 'Buy booze, send invitations',
+//             categories: ['fun'],
+//             duedate: '2024-12-28',
+//             id: 3
+//         },
+//     ]
+//     },
+//     {
+//         username: 'Agapi',
+//         view: 'list',
+//         tasks: [
+//             {
+//                 title: 'Vacation Planning',
+//                 description: 'Get tickets, renew passport',
+//                 categories: ['vacation', 'family', 'home'],
+//                 duedate: '2024-12-27',
+//                 id: 0
+//             },
+//             {
+//                 title: 'Gym routine',
+//                 description: 'Stand-ups, sit-ups, pull-ups, push-ups',
+//                 categories: ['health', 'fun'],
+//                 duedate: '2024-12-31',
+//                 id: 1
+//             }
+//         ]
+//     }
+// ];
 
 export let currentIndex = updateIndex();
 let userData;
@@ -77,7 +77,7 @@ const wrapper = document.querySelector('#wrapper');
 //hide welcome section after login
 export function login() {
     wrapper.style.display = 'none';
-    activeUser = usernameInput.value;
+    activeUser = usernameInput.value.toLowerCase();
     loadDashboard(activeUser);
 }
 welcomeScreen();
@@ -202,7 +202,13 @@ function taskAdd() {
         if (nameValid) {
             const inputCategories = form.elements[2].value.split(',');
             const trimmedInputCategories = inputCategories.map(cat => cat.trim());
-            const newEntry = new Task({title: form.elements[0].value, description: form.elements[1].value, categories: trimmedInputCategories, duedate: form.elements[3].value, id: userData.tasks.length});
+            let lastId;
+            if (userData.tasks.length > 0) {
+                lastId = userData.tasks.reduce((acc, val) => {return acc.id > val.id ? acc : val}) + 1;
+            } else {
+                lastId = 0;
+            }
+            const newEntry = new Task({title: form.elements[0].value, description: form.elements[1].value, categories: trimmedInputCategories, duedate: form.elements[3].value, id: lastId});
             console.log("New task: ",newEntry);
             userData.tasks.push(newEntry);
             loadDashboard(activeUser);
@@ -361,3 +367,8 @@ export function removeCategory(taskContainer, task, category) {
     loadDashboard(activeUser);
 }
 
+export function removeTask(task) {
+    const index = userData.tasks.indexOf(task);
+    userData.tasks.splice(index, 1);
+    loadDashboard(activeUser);
+}

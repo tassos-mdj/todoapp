@@ -1,7 +1,6 @@
 let storage;
+
 function storageAvailable(type) {
-
-
   try {
     storage = window[type];
     const x = "__storage_test__";
@@ -23,7 +22,7 @@ let index;
 
 function storageInit() {
   if (JSON.parse(fromStorage('index'))) {
-    console.log('Storage already initiated : ', index);
+    console.log('Storage already initiated');
   } else {
     index = [0];
     toStorage('index', JSON.stringify(index));

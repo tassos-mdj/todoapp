@@ -68,7 +68,7 @@ aside {
     gap: 2em;
     padding: 1.2em;
     align-items: stretch;
-    max-height: 100vh;
+    max-height: 100%;
     background-color: #F8F8FF;
 }
 
@@ -115,10 +115,21 @@ aside p {
     font-weight: 600;
 }
 
-.user-pfp {
-    max-width: 2.5rem;
-    border-radius: 50px;
-}
+[data-letters]:before {
+    content:attr(data-letters);
+    display:inline-block;
+    font-size:1em;
+    font-weight: 900;
+    width:2.5em;
+    height:2.5em;
+    line-height:2.5em;
+    text-align:center;
+    border-radius:50%;
+    background: #8AB983;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    }
 
 header {
     grid-area: 1 / 2 / 2 / 3;
@@ -212,6 +223,7 @@ p.task-description {
     justify-content: flex-start;
     align-items: center;
     gap: 1rem;
+    flex-flow: row wrap;
 }
 
 
@@ -366,6 +378,13 @@ dialog {
 .close {
     position: absolute;
     top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.delete {
+    position: absolute;
+    bottom: 10px;
     right: 10px;
     cursor: pointer;
 }

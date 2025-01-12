@@ -1,6 +1,7 @@
-import { login as loginFunction } from "./index.js"
+import { login as loginFunction, removeTask } from "./index.js"
 import hash from "./images/hash.svg"
 import closeButton from "./images/x-circle.svg"
+import deleteButton from "./images/trash-2.svg"
 import { add, format } from "date-fns";
 import { removeCategory } from "./index.js";
 
@@ -14,7 +15,13 @@ export function createDashboard(userData){
     container.classList.remove('hidden');
 
     const userNameDisplay = document.querySelector('.user-name-display');
-    userNameDisplay.textContent = userData.username;
+    const capitalizedName = userData.username.charAt(0).toUpperCase() + userData.username.slice(1);
+    userNameDisplay.textContent = capitalizedName;
+
+    const initials = capitalizedName.charAt(0);
+
+    const userPfp = document.querySelector('#user-pfp');
+    userPfp.setAttribute('data-letters', initials);
 
     displayContent('agenda', userData.tasks);
 }
@@ -48,12 +55,24 @@ export function displayContent(section, userTasks) {
 export function displayTask(task) {
     const taskView = document.querySelector('#task-view');
     taskView.innerHTML = '';
+
     const closeBtn = new Image();
     closeBtn.src = closeButton;
     closeBtn.alt = 'Close button';
     closeBtn.classList.add('close');
     taskView.appendChild(closeBtn);
     closeBtn.addEventListener('click', (e) => taskView.close());
+    
+    const deleteBtn = new Image();
+    deleteBtn.src = deleteButton;
+    deleteBtn.alt = 'Delete Button';
+    deleteBtn.classList.add('delete');
+    taskView.appendChild(deleteBtn);
+    deleteBtn.addEventListener('click', function () {
+        taskView.close();
+        removeTask(task);
+    } )
+
     createTask(taskView, task, 'active-task');
     taskView.showModal();
 }
