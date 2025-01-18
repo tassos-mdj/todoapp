@@ -85,9 +85,7 @@ welcomeScreen();
 function logout() {
     usernameInput.value = '';
     activeUser = '';
-    const container = document.querySelector('.container');
-    container.classList.add('hidden');
-    wrapper.style.display = 'flex';
+    window.location.reload();
 }
 
 function loadDashboard(activeUser) {

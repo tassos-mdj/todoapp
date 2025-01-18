@@ -22,6 +22,7 @@ body {
     display: grid;
     justify-items: center;
     gap: 1rem;
+    max-width: 300px;
 }
 
 #logo {
@@ -50,6 +51,12 @@ body {
     border-radius: 50px;
     font-weight: bold;
     border: none;
+}
+
+#disclaimer {
+    grid-area: 4 / 1 / 5 / 3;
+    font-style: italic;
+    font-size: 0.8em;
 }
 
 .container {
