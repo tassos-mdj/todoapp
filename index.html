@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mdj-do App</title>
+    <link rel="stylesheet" href="609a232ab53e413e38d2.css">
+<script defer src="main.js"></script></head>
+<body>
+    <div id="wrapper">
+        <section id="welcome-section">
+            <img src="e299aa8e54a176e89a93.png" alt="Logo" id="logo">
+            <p id="welcome-text">Welcome to Mdj-Do! <br> Please enter your username below:</p>
+            <input type="text" name="username" id="username">
+            <button id="login-button">Login</button>
+            <p id="disclaimer">Note: Currently user info and tasks are stored locally on your computer. You cannot access your data from a different device. Currently designed for desktop use only.</p>
+        </section>
+    </div>
+    
+    <div class="container hidden">
+        <aside>
+            <div class="user-info">
+                <p id="user-pfp" data-letters=""></p>
+                <p class="user-name-display"></p>
+            </div>
+            <menu>
+                <ul>
+                    <li id="task-add">
+                        <img src="9cb4c8cabe95fc1c863a.svg" id="task-add-icon" alt="Add Task Icon">
+                        <p>Add Task</p>
+                    </li>
+                    <li id="agenda">
+                        <img src="ecc13d6312bef146aef0.svg" alt="Agenda Icon">
+                        <p>Agenda</p>
+                    </li>
+                    <li id="today">
+                        <img src="0aa970cf2052f800fc7a.svg" alt="Today Icon">
+                        <p>Today</p>
+                    </li>
+                    <li id="calendar">
+                        <img src="8a18c96e230091fc1a09.svg" alt="View all Icon">
+                        <p>Calendar</p>
+                    </li>
+                </ul>
+            </menu>
+            <nav>
+                <ul id="cat-ul">
+                    <li id="all-cat">
+                        <img src="71ec9b1867e42a90dd12.svg" alt="">
+                        <p>All Categories</p>
+                    </li>
+                </ul>
+            </nav>
+            <ul>
+                <li id="logout">Logout</li>
+            </ul>
+        </aside>
+        <header>
+            <div class="toggle-view">
+                <img src="f7f169838f7f1e87e21d.svg" alt="Change View Icon">
+                <p>View</p>
+            </div>
+        </header>
+        <dialog id="new-task">
+            <form id="new-task-form">
+                <img src="605614302510ae44b860.svg" alt="Close dialog button" class="close">
+                <legend>What's on your mind?</legend>
+                <div id="input-title-field">
+                    <input type="text" name="new-title" id="new-title" placeholder="Title">
+                    <small></small>
+                </div>
+                <div>
+                    <input type="text" name="new-descriprion" id="new-description" placeholder="Description">
+                </div>
+                <div>
+                    <input type="text" name="new-categories" id="new-categories" placeholder="Categories (e.g. 'category1, category2, ...')">
+                </div>
+                <div id="input-date-field">
+                    <label for="new-date">Due date:</label>
+                    <input type="date" name="new-date" id="new-date">
+                </div>
+                <input type="submit" value="Add task" id="submit-task">
+            </form>
+        </dialog>
+        <dialog id="task-view"></dialog>
+        <div class="data-area"></div>
+    </div>
+</body>
+</html>
